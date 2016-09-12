@@ -1,0 +1,32 @@
+{
+  "name": "connect-four",
+  "version": "1.0.0",
+  "description": "## Functional Specification",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robbykim/connect-four.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/robbykim/connect-four/issues"
+  },
+  "homepage": "https://github.com/robbykim/connect-four#readme",
+  "devDependencies": {
+    "eslint": "^3.5.0",
+    "eslint-config-airbnb": "^11.1.0",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.2.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "file-system": "^2.2.1",
+    "mongoose": "^4.6.0"
+  }
+}
