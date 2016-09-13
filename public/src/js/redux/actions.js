@@ -6,8 +6,9 @@ const FETCH_GAME_ERROR = 'FETCH_GAME_ERROR';
 
 const ADD_CHIP_SUCCESS = 'ADD_CHIP_SUCCESS';
 
-function addChipSuccess() {
+function addChipSuccess(board) {
   return {
+    board,
     type: ADD_CHIP_SUCCESS,
   };
 }
@@ -22,6 +23,7 @@ function addChipError(err) {
 }
 
 function addChip(chip) {
+  console.log('here');
   return (dispatch) => {
     const init = {
       method: 'PUT',
@@ -41,10 +43,16 @@ function addChip(chip) {
       }
 
       return res.json();
-    }).then(() => {
-      return dispatch(addChipSuccess());
+    }).then((board) => {
+      return dispatch(addChipSuccess(board));
     }).catch((err) => {
       return dispatch(addChipError(err));
     });
   };
 }
+
+exports.ADD_CHIP_SUCCESS = ADD_CHIP_SUCCESS;
+exports.addChipSuccess = addChipSuccess;
+exports.ADD_CHIP_ERROR = ADD_CHIP_ERROR;
+exports.addChipError = addChipError;
+exports.addChip = addChip;

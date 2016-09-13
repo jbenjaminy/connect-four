@@ -1,5 +1,11 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
 import Tile from './tile';
+import actions from '../redux/actions';
+
+const propTypes = {
+  dispatch: PropTypes.function,
+};
 
 class Game extends React.Component {
   constructor() {
@@ -32,6 +38,11 @@ class Game extends React.Component {
       gameArray.push(column.slice());
     });
 
+    this.props.dispatch(actions.addChip({
+      gameArray,
+      col,
+    }));
+/*
     for (let i = 5; i >= 0; i--) {
       if (!gameArray[col][i]) {
         if (this.state.turn === 'red') {
@@ -171,6 +182,7 @@ class Game extends React.Component {
     if (chipsConnected >= 4) {
       return alert('you win');
     }
+    */
   }
 
   render() {
@@ -207,4 +219,8 @@ class Game extends React.Component {
   }
 }
 
-module.exports = Game;
+Game.propTypes = propTypes;
+
+const Container = connect()(Game);
+
+module.exports = Container;
