@@ -129,7 +129,6 @@ function checkChip(row, col, isMyChip, game) {
 
 router.get('/:accessCode', (req, res) => {
   const accessCode = req.params.accessCode;
-  console.log('here');
 
   Game.find({ accessCode }, (err, game) => {
     if (err) {
@@ -154,7 +153,7 @@ router.delete('/:accessCode', (req, res) => {
 
 router.post('/', (req, res) => {
   Game.create({
-    game: [
+    gameArray: [
       [0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0],
@@ -198,15 +197,13 @@ router.put('/', (req, res) => {
   }
 
   if (isAdded) {
-    console.log(turn);
     turn = turn === 'red' ? 'blue' : 'red';
-    console.log(turn);
     Game.findOneAndUpdate({
       accessCode: 'asdf1234',
     }, {
       isWinner,
       turn,
-      game: gameArray,
+      gameArray,
     }, { new: true }, (err, game) => {
       if (err) {
         return res.status(400).json(err);
@@ -215,10 +212,37 @@ router.put('/', (req, res) => {
       return res.status(200).json({
         isWinner: game.isWinner,
         turn: game.turn,
-        gameArray: game.game,
+        gameArray: game.gameArray,
       });
     });
   }
+});
+
+router.put('/new/:accessCode', (req, res) => {
+  const accessCode = req.params.accessCode;
+  const turn = req.body.turn === 'red' ? 'blue' : 'red';
+
+  Game.findOneAndUpdate({
+    accessCode,
+  }, {
+    turn,
+    gameArray: [
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0, 0],
+    ],
+    isWinner: false,
+  }, { new: true }, (err, game) => {
+    if (err) {
+      return res.status(400).json(err);
+    }
+
+    return res.status(200).json(game);
+  });
 });
 
 module.exports = router;

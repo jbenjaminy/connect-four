@@ -12,10 +12,17 @@ class Game extends React.Component {
   constructor() {
     super();
     this.addChip = this.addChip.bind(this);
+    this.newGame = this.newGame.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(actions.fetchGame('asdf1234'));
+  }
+
+  newGame() {
+    this.props.dispatch(actions.newGame({
+      turn: this.props.game.turn,
+    }));
   }
 
   addChip(col) {
@@ -34,6 +41,7 @@ class Game extends React.Component {
 
   render() {
     const game = [];
+    console.log(this.props.game);
     if (this.props.game.gameArray) {
       this.props.game.gameArray.forEach((col, colIdx) => {
         const column = [];
@@ -58,7 +66,7 @@ class Game extends React.Component {
         <h2>Players:</h2>
         <h2>Access Code:</h2>
         <h1>Connect Four with Friends</h1>
-        <button>New Game</button>
+        <button onClick={this.newGame}>New Game</button>
         <section className="game">
           {game}
         </section>
