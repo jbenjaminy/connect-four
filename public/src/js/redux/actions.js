@@ -14,12 +14,37 @@ function addChipSuccess() {
 
 const ADD_CHIP_ERROR = 'ADD_CHIP_ERROR';
 
-function addChipError() {
+function addChipError(err) {
   return {
     type: ADD_CHIP_ERROR,
+    error: err,
   };
 }
 
-function addChip() {
+function addChip(chip) {
+  return (dispatch) => {
+    const init = {
+      method: 'PUT',
+      headers: {
+        Accept: 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(chip),
+    };
 
+    const url = 'http://localhost:8080/chip';
+    return fetch(url, init).then((res) => {
+      if (res.status < 200 || res.status >= 300) {
+        const err = new Error(res.statusText);
+        err.response = res;
+        throw err;
+      }
+
+      return res.json();
+    }).then(() => {
+      return dispatch(addChipSuccess());
+    }).catch((err) => {
+      return dispatch(addChipError(err));
+    });
+  };
 }
