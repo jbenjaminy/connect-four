@@ -164,6 +164,7 @@ router.post('/', (req, res) => {
     ],
     accessCode: req.body.accessCode,
     isWinner: false,
+    turn: 'red',
   }, (err, game) => {
     if (err) {
       return res.status(400).json(err);
@@ -189,7 +190,7 @@ router.put('/', (req, res) => {
         gameArray[col][i] = -1;
         isWinner = checkChip(i, col, isBlue, gameArray);
       }
-
+      console.log(isWinner);
       return res.status(200).json({
         isWinner,
         turn,

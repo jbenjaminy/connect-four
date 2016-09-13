@@ -3,21 +3,23 @@ import actions from './actions';
 function reducer(state = {}, action) {
   if (action.type === actions.FETCH_GAME_SUCCESS) {
     return Object.assign({}, state, {
-      turn: action.turn,
-      gameArray: action.gameArray,
-      winner: action.isWinner,
+      turn: action.game.turn,
+      gameArray: action.game.game,
+      winner: action.game.isWinner,
     });
   }
 
   if (action.type === actions.ADD_CHIP_SUCCESS) {
-    const turn = action.turn === 'red' ? 'blue' : 'red';
+    const turn = action.game.turn === 'red' ? 'blue' : 'red';
 
     return Object.assign({}, state, {
       turn,
-      gameArray: action.gameArray,
-      winner: action.isWinner,
+      gameArray: action.game.gameArray,
+      winner: action.game.isWinner,
     });
   }
+
+  return state;
 }
 
 module.exports = reducer;

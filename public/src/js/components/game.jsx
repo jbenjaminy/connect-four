@@ -5,6 +5,7 @@ import actions from '../redux/actions';
 
 const propTypes = {
   dispatch: PropTypes.func,
+  game: PropTypes.object,
 };
 
 class Game extends React.Component {
@@ -13,38 +14,44 @@ class Game extends React.Component {
     this.addChip = this.addChip.bind(this);
   }
 
+  componentDidMount() {
+    this.props.dispatch(actions.fetchGame('asdf1234'));
+  }
+
   addChip(col) {
     const gameArray = [];
-    this.state.game.forEach((column) => {
+
+    this.props.game.gameArray.forEach((column) => {
       gameArray.push(column.slice());
     });
 
     this.props.dispatch(actions.addChip({
       gameArray,
       col,
-      turn: this.state.turn,
+      turn: this.props.game.turn,
     }));
   }
 
   render() {
     const game = [];
+    if (this.props.game.gameArray) {
+      this.props.game.gameArray.forEach((col, colIdx) => {
+        const column = [];
+        col.forEach((row, rowIdx) => {
+          column.push(<Tile value={row} key={rowIdx} />);
+        });
 
-    this.state.game.forEach((col, colIdx) => {
-      const column = [];
-      col.forEach((row, rowIdx) => {
-        column.push(<Tile value={row} key={rowIdx} />);
+        game.push(
+          <ul
+            className="game-column"
+            key={colIdx}
+            onClick={() => { this.addChip(colIdx); }}
+          >
+            {column}
+          </ul>
+        );
       });
-
-      game.push(
-        <ul
-          className="game-column"
-          key={colIdx}
-          onClick={() => { this.addChip(colIdx); }}
-        >
-          {column}
-        </ul>
-      );
-    });
+    }
 
     return (
       <div className="flex-container">

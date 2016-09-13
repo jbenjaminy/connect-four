@@ -39,9 +39,9 @@ function fetchGame(accessCode) {
 
 const ADD_CHIP_SUCCESS = 'ADD_CHIP_SUCCESS';
 
-function addChipSuccess(board) {
+function addChipSuccess(game) {
   return {
-    board,
+    game,
     type: ADD_CHIP_SUCCESS,
   };
 }
