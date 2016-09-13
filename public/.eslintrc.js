@@ -11,6 +11,7 @@ module.exports = {
             "error",
             "always"
         ],
-        "no-plusplus": 0
+        "no-plusplus": 0,
+        "consistent-return": 0
     }
 };

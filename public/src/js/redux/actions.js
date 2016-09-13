@@ -4,6 +4,12 @@ const FETCH_GAME_SUCCESS = 'FETCH_GAME_SUCCESS';
 
 const FETCH_GAME_ERROR = 'FETCH_GAME_ERROR';
 
+function fetchGame(accessCode) {
+  return (dispatch) => {
+
+  }
+}
+
 const ADD_CHIP_SUCCESS = 'ADD_CHIP_SUCCESS';
 
 function addChipSuccess(board) {
@@ -25,7 +31,7 @@ function addChipError(err) {
 function addChip(chip) {
   return (dispatch) => {
     const init = {
-      method: 'POST',
+      method: 'PUT',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

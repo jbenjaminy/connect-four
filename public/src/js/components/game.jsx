@@ -24,13 +24,7 @@ class Game extends React.Component {
     };
   }
 
-  isRed(chip) {
-    return chip === 1;
-  }
 
-  isBlue(chip) {
-    return chip === -1;
-  }
 
   addChip(col) {
     const gameArray = [];
@@ -41,148 +35,8 @@ class Game extends React.Component {
     this.props.dispatch(actions.addChip({
       gameArray,
       col,
+      turn: this.state.turn,
     }));
-/*
-    for (let i = 5; i >= 0; i--) {
-      if (!gameArray[col][i]) {
-        if (this.state.turn === 'red') {
-          gameArray[col][i] = 1;
-          this.setState({
-            game: gameArray,
-            turn: 'blue',
-          });
-
-          this.checkChip(i, col, this.isRed);
-          return true;
-        } else {
-          gameArray[col][i] = -1;
-          this.setState({
-            game: gameArray,
-            turn: 'red',
-          });
-
-          this.checkChip(i, col, this.isBlue);
-          return true;
-        }
-      }
-    }
-
-    return false;
-  }
-
-  checkChip(row, col, isMyChip) {
-    let chipsConnected = 1;
-
-    // checks down directions only
-    for (let i = 1; i < 4; i++) {
-      if (row + i <= 5) {
-        if (isMyChip(this.state.game[col][row + i])) {
-          chipsConnected++;
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-    }
-
-    if (chipsConnected >= 4) {
-      return alert('you win');
-    }
-
-    chipsConnected = 1;
-    // checks horizontal forwards
-    for (let i = 1; i < 4; i++) {
-      if (col + i <= 6) {
-        if (isMyChip(this.state.game[col + i][row])) {
-          chipsConnected++;
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-    }
-
-    // checks horizontal backwards
-    for (let i = 1; i < 4; i++) {
-      if (col - i >= 0) {
-        if (isMyChip(this.state.game[col - i][row])) {
-          chipsConnected++;
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-    }
-
-    if (chipsConnected >= 4) {
-      return alert('you win');
-    }
-
-    // checks diagnol forwards
-    chipsConnected = 1;
-
-    for (let i = 1; i < 4; i++) {
-      if (col + i <= 6 && row - i >= 0) {
-        if (isMyChip(this.state.game[col + i][row - i])) {
-          chipsConnected++;
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-    }
-
-    for (let i = 1; i < 4; i++) {
-      if (col - i >= 0 && row + i <= 5) {
-        if (isMyChip(this.state.game[col - i][row + i])) {
-          chipsConnected++;
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-    }
-
-    if (chipsConnected >= 4) {
-      return alert('you win');
-    }
-
-    // checks diagnol backwards
-    chipsConnected = 1;
-
-    for (let i = 1; i < 4; i++) {
-      if (col - i >= 0 && row - i >= 0) {
-        if (isMyChip(this.state.game[col - i][row - i])) {
-          chipsConnected++;
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-    }
-
-    for (let i = 1; i < 4; i++) {
-      if (col + i <= 6 && row + i <= 5) {
-        if (isMyChip(this.state.game[col + i][row + i])) {
-          chipsConnected++;
-        } else {
-          break;
-        }
-      } else {
-        break;
-      }
-    }
-
-    if (chipsConnected >= 4) {
-      return alert('you win');
-    }
-    */
   }
 
   render() {

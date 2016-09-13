@@ -2,7 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./config');
-const chip = require('./routes/chip');
+const game = require('./routes/game');
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -40,9 +40,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/chip', chip);
-// app.use('/questions', questions);
-// app.use('/users', users);
+app.use('/game', game);
 
 exports.app = app;
 exports.runServer = runServer;
