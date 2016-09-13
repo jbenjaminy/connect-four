@@ -164,7 +164,7 @@ router.post('/', (req, res) => {
     ],
     accessCode: req.body.accessCode,
     isWinner: false,
-    turn: 'red',
+    turn: 'Red',
   }, (err, game) => {
     if (err) {
       return res.status(400).json(err);
@@ -183,7 +183,7 @@ router.put('/', (req, res) => {
 
   for (let i = 5; i >= 0; i -= 1) {
     if (!gameArray[col][i]) {
-      if (turn === 'red') {
+      if (turn === 'Red') {
         gameArray[col][i] = 1;
         isWinner = checkChip(i, col, isRed, gameArray);
       } else {
@@ -197,7 +197,7 @@ router.put('/', (req, res) => {
   }
 
   if (isAdded) {
-    turn = turn === 'red' ? 'blue' : 'red';
+    turn = turn === 'Red' ? 'Blue' : 'Red';
     Game.findOneAndUpdate({
       accessCode: 'asdf1234',
     }, {
@@ -220,7 +220,7 @@ router.put('/', (req, res) => {
 
 router.put('/new/:accessCode', (req, res) => {
   const accessCode = req.params.accessCode;
-  const turn = req.body.turn === 'red' ? 'blue' : 'red';
+  const turn = req.body.turn === 'Red' ? 'Blue' : 'Red';
 
   Game.findOneAndUpdate({
     accessCode,

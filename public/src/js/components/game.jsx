@@ -42,13 +42,8 @@ class Game extends React.Component {
   }
 
   render() {
-    let winner;
-
-    if (this.props.game.winner) {
-      const turn = this.props.game.turn === 'red' ? 'Blue' : 'Red';
-
-      winner = `${turn} wins`;
-    }
+    const winner = this.props.game.turn === 'red' ? 'Blue' : 'Red';
+    const message = this.props.game.winner ? `${winner} wins` : `${this.props.game.turn}'s Turn`;
 
     const game = [];
     if (this.props.game.gameArray) {
@@ -76,7 +71,7 @@ class Game extends React.Component {
         <h2>Access Code:</h2>
         <h1>Connect Four with Friends</h1>
         <button onClick={this.newGame}>New Game</button>
-        <h2>{winner}</h2>
+        <h2>{message}</h2>
         <section className="game">
           {game}
         </section>
