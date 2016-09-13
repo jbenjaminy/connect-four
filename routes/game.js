@@ -135,7 +135,7 @@ router.get('/:accessCode', (req, res) => {
       return res.status(400).json(err);
     }
 
-    return res.status(200).json(game);
+    return res.status(200).json(game[0]);
   });
 });
 
