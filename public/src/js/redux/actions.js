@@ -23,10 +23,9 @@ function addChipError(err) {
 }
 
 function addChip(chip) {
-  console.log('here');
   return (dispatch) => {
     const init = {
-      method: 'PUT',
+      method: 'POST',
       headers: {
         Accept: 'application/json',
         'Content-Type': 'application/json',

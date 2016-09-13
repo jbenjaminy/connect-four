@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const config = require('./config');
+const chip = require('./routes/chip');
 
 const app = express();
 const jsonParser = bodyParser.json();
@@ -30,11 +31,16 @@ if (require.main === module) {
   });
 }
 
-app.use(passport.initialize());
 app.use(express.static('./public/build'));
 app.use(jsonParser);
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  next();
+});
 
-// app.use('/auth', auth);
+app.use('/chip', chip);
 // app.use('/questions', questions);
 // app.use('/users', users);
 

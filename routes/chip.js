@@ -3,6 +3,8 @@ const Game = require('../models/game');
 
 const router = express.Router();
 
-router.post('/', jsonParser, (req, res) => {
-  
+router.post('/', (req, res) => {
+  console.log('in here');
 });
+
+module.exports = router;
