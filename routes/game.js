@@ -129,6 +129,7 @@ function checkChip(row, col, isMyChip, game) {
 
 router.get('/:accessCode', (req, res) => {
   const accessCode = req.params.accessCode;
+  console.log('here');
 
   Game.find({ accessCode }, (err, game) => {
     if (err) {
@@ -177,12 +178,12 @@ router.post('/', (req, res) => {
 router.put('/', (req, res) => {
   const gameArray = req.body.gameArray;
   const col = req.body.col;
-  const turn = req.body.turn;
+  let turn = req.body.turn;
+  let isWinner;
+  let isAdded = false;
 
   for (let i = 5; i >= 0; i -= 1) {
     if (!gameArray[col][i]) {
-      let isWinner;
-
       if (turn === 'red') {
         gameArray[col][i] = 1;
         isWinner = checkChip(i, col, isRed, gameArray);
@@ -190,16 +191,34 @@ router.put('/', (req, res) => {
         gameArray[col][i] = -1;
         isWinner = checkChip(i, col, isBlue, gameArray);
       }
-      console.log(isWinner);
-      return res.status(200).json({
-        isWinner,
-        turn,
-        gameArray,
-      });
+
+      isAdded = true;
+      break;
     }
   }
 
-  return false;
+  if (isAdded) {
+    console.log(turn);
+    turn = turn === 'red' ? 'blue' : 'red';
+    console.log(turn);
+    Game.findOneAndUpdate({
+      accessCode: 'asdf1234',
+    }, {
+      isWinner,
+      turn,
+      game: gameArray,
+    }, { new: true }, (err, game) => {
+      if (err) {
+        return res.status(400).json(err);
+      }
+
+      return res.status(200).json({
+        isWinner: game.isWinner,
+        turn: game.turn,
+        gameArray: game.game,
+      });
+    });
+  }
 });
 
 module.exports = router;

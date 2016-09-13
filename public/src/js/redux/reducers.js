@@ -10,10 +10,8 @@ function reducer(state = {}, action) {
   }
 
   if (action.type === actions.ADD_CHIP_SUCCESS) {
-    const turn = action.game.turn === 'red' ? 'blue' : 'red';
-
     return Object.assign({}, state, {
-      turn,
+      turn: action.game.turn,
       gameArray: action.game.gameArray,
       winner: action.game.isWinner,
     });
