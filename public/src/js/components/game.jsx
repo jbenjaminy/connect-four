@@ -40,8 +40,15 @@ class Game extends React.Component {
   }
 
   render() {
+    let winner;
+
+    if (this.props.game.winner) {
+      const turn = this.props.game.turn === 'red' ? 'Blue' : 'Red';
+
+      winner = `${turn} wins`;
+    }
+
     const game = [];
-    console.log(this.props.game);
     if (this.props.game.gameArray) {
       this.props.game.gameArray.forEach((col, colIdx) => {
         const column = [];
@@ -67,6 +74,7 @@ class Game extends React.Component {
         <h2>Access Code:</h2>
         <h1>Connect Four with Friends</h1>
         <button onClick={this.newGame}>New Game</button>
+        <h2>{winner}</h2>
         <section className="game">
           {game}
         </section>
