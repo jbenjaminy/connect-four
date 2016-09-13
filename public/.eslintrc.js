@@ -11,6 +11,6 @@ module.exports = {
             "error",
             "always"
         ],
-        "react/prop-types": 0
+        "no-plusplus": 0
     }
 };

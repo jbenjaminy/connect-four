@@ -1,4 +1,8 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+
+const propTypes = {
+  value: PropTypes.number.isRequired,
+};
 
 function Tile(props) {
   let chipColor;
@@ -14,5 +18,7 @@ function Tile(props) {
     <li className={chipColor} />
   );
 }
+
+Tile.propTypes = propTypes;
 
 module.exports = Tile;
