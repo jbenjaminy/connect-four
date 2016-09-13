@@ -10,6 +10,11 @@ const GameSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  isWinner: {
+    type: Boolean,
+    required: true,
+  },
 });
 
 const Game = mongoose.model('Game', GameSchema);

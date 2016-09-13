@@ -139,6 +139,18 @@ router.get('/:accessCode', (req, res) => {
   });
 });
 
+router.delete('/:accessCode', (req, res) => {
+  const accessCode = req.params.accessCode;
+
+  Game.findOneAndRemove({ accessCode }, (err, game) => {
+    if (err) {
+      return res.status(400).json(err);
+    }
+
+    return res.status(200).json(game);
+  });
+});
+
 router.post('/', (req, res) => {
   Game.create({
     game: [
@@ -151,6 +163,7 @@ router.post('/', (req, res) => {
       [0, 0, 0, 0, 0, 0],
     ],
     accessCode: req.body.accessCode,
+    isWinner: false,
   }, (err, game) => {
     if (err) {
       return res.status(400).json(err);

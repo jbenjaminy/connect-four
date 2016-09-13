@@ -4,27 +4,14 @@ import Tile from './tile';
 import actions from '../redux/actions';
 
 const propTypes = {
-  dispatch: PropTypes.function,
+  dispatch: PropTypes.func,
 };
 
 class Game extends React.Component {
   constructor() {
     super();
-    this.state = {
-      game: [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-      ],
-      turn: 'red',
-    };
+    this.addChip = this.addChip.bind(this);
   }
-
-
 
   addChip(col) {
     const gameArray = [];
@@ -75,6 +62,12 @@ class Game extends React.Component {
 
 Game.propTypes = propTypes;
 
-const Container = connect()(Game);
+const mapStateToProps = (state) => {
+  return {
+    game: state,
+  };
+};
+
+const Container = connect(mapStateToProps)(Game);
 
 module.exports = Container;
