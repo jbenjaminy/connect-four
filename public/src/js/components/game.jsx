@@ -32,11 +32,13 @@ class Game extends React.Component {
       gameArray.push(column.slice());
     });
 
-    this.props.dispatch(actions.addChip({
-      gameArray,
-      col,
-      turn: this.props.game.turn,
-    }));
+    if (!this.props.game.winner) {
+      this.props.dispatch(actions.addChip({
+        gameArray,
+        col,
+        turn: this.props.game.turn,
+      }));
+    }
   }
 
   render() {
