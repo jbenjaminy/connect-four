@@ -2,3 +2,4 @@ node_modules
 .DS_Store
 build
 logic.js
+mongo_data
