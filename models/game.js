@@ -23,11 +23,14 @@ const GameSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-
   turn: {
     type: String,
     required: true,
   },
+  players: {
+    type: Object,
+    required: true
+  }
 });
 
 const Game = mongoose.model('Game', GameSchema);

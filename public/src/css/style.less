@@ -1,25 +1,57 @@
-.game {
-  display: flex;
-  flex-direction: row;
+.flex-container {
+  .player-one, .player-two {
+    padding-bottom: 10px;
+    h2 {
+      display: inline-block;
+      margin: 0;
+    }
 
-  ul {
+    ul {
+      display: inline-block;
+      margin: 0;
+      padding-left: 0;
+      margin-bottom: -8.4px;
+
+      li {  
+        list-style: none;
+        padding: 1rem;
+        margin: 0;
+        border-radius: 0.5rem;
+      }
+
+      .red {
+        background-color: red;
+      }
+
+      .blue {
+        background-color: blue;
+      }
+    }
+  }
+
+  .game {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
 
-    li {
-      list-style: none;
-      padding: 2rem;
-      background-color: yellow;
-      margin: 0.25rem;
-      border-radius: 1rem;
-    }
+    ul {
+      display: flex;
+      flex-direction: column;
 
-    li.red {
-      background-color: red;
-    }
+      li {
+        list-style: none;
+        padding: 2rem;
+        background-color: yellow;
+        margin: 0.25rem;
+        border-radius: 1rem;
+      }
 
-    li.blue {
-      background-color: blue;
+      li.red {
+        background-color: red;
+      }
+
+      li.blue {
+        background-color: blue;
+      }
     }
   }
 }

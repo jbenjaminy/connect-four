@@ -49,3 +49,16 @@ This page contains the actual game itself. There is a module on the left with th
 - Express
 
 (Wireframe)[https://wireframe.cc/4Qxmxj]
+
+# COMPLETED:
+-render accessCode in game.jsx
+-add players' names to backend
+-render players' names in game.jsx
+
+# TO DO: 
+-be able to join existing game using accessCode
+-move db to mLab or something
+-implement socket.io
+-add feature where on onClick of accessCode it gives you textbox to enter friend's phone number to text accessCode.
+-randomize who moves first;
+-is reset game working?

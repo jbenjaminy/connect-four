@@ -9,11 +9,13 @@ function reducer(state = {}, action) {
     case actions.ADD_CHIP_SUCCESS:
     case actions.RESET_GAME_SUCCESS:
     case actions.NEW_GAME_SUCCESS: {
+      console.log('game -->', action.game);
       return Object.assign({}, state, {
         turn: action.game.turn,
         gameArray: action.game.gameArray,
         winner: action.game.isWinner,
         accessCode: action.game.accessCode,
+        players: action.game.players
       });
     }
 

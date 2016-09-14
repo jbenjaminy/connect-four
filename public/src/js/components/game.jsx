@@ -65,51 +65,56 @@ class Game extends React.Component {
         gameArray,
         col,
         turn: this.props.game.turn,
+        players: this.props.game.players
       }));
     }
   }
 
   render() {
+    // was getting error 'this.props.game.turn is undefined', 
+    // so added this here and was then able to get rid 
+    // of the 'if (this.props.game.gameArray) statement above line 90'
+    if (!this.props.game.turn) {
+      return null;
+    }
     // winner constant will be set to the last persons turn because
     // turn changes are handled in the backend. backend responds with the new turn
     // rather than the winner's turn and a boolean for if a winner was detected
     const winner = this.props.game.turn === 'Red' ? 'Blue' : 'Red';
 
     // will set the display message for who won if so, if not, who's turn it is
-    const message = this.props.game.winner ? `${winner} wins` : `${this.props.game.turn}'s Turn`;
+    const message = this.props.game.winner ? `${this.props.game.players[winner]} wins` : `${this.props.game.players[this.props.game.turn]}'s Turn`;
 
     // empty game array
     const game = [];
 
-    // if the game.gameArray exists (did this to fix a bug where the page would fail
-    // to load because it would try and read 'gameArray' of undefined)
-    if (this.props.game.gameArray) {
-      // will loop through each of the col's
-      this.props.game.gameArray.forEach((col, colIdx) => {
-        const column = [];
+    // will loop through each of the col's
+    this.props.game.gameArray.forEach((col, colIdx) => {
+      const column = [];
 
-        // will loop through each row in the col and push the tile into the column array
-        col.forEach((row, rowIdx) => {
-          column.push(<Tile value={row} key={rowIdx} />);
-        });
-
-        // once a column is finished, it will be pushed into the game array (full board)
-        game.push(
-          <ul
-            className="game-column"
-            key={colIdx}
-            onClick={() => { this.addChip(colIdx, this.props.game.accessCode); }}
-          >
-            {column}
-          </ul>
-        );
+      // will loop through each row in the col and push the tile into the column array
+      col.forEach((row, rowIdx) => {
+        column.push(<Tile value={row} key={rowIdx} />);
       });
-    }
+
+      // once a column is finished, it will be pushed into the game array (full board)
+      game.push(
+        <ul
+          className="game-column"
+          key={colIdx}
+          onClick={() => { this.addChip(colIdx, this.props.game.accessCode); }}
+        >
+          {column}
+        </ul>
+      );
+    });
+
 
     return (
       <div className="flex-container">
-        <h2>Players:</h2>
-        <h2>Access Code:</h2>
+        <div className='player-one'><h2>Player One: {this.props.game.players.Red}</h2>&nbsp;&nbsp;<ul><Tile value={1}/></ul></div>
+        <div className='player-two'><h2>Player Two: {this.props.game.players.Blue}</h2>&nbsp;&nbsp;<ul><Tile value={-1}/></ul></div>
+        <h2>Access Code: {this.props.game.accessCode}</h2>
         <h1>Connect Four with Friends</h1>
         <button onClick={this.resetGame}>New Game</button>
         <h2>{message}</h2>

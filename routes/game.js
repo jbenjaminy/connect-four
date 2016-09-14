@@ -192,7 +192,7 @@ router.get('/', (req, res) => {
 });
 
 // POST endpoint that will create a new game in the db
-router.post('/', (req, res) => {
+router.post('/:name', (req, res) => {
   // calls makeCode and gets a promise
   const promise = makeCode();
 
@@ -211,6 +211,7 @@ router.post('/', (req, res) => {
       ],
       isWinner: false,
       turn: 'Red',
+      players: {'Red': req.params.name, 'Blue': 'Blue'}
     }, (err, game) => {
       if (err) {
         return res.status(400).json(err);
@@ -227,6 +228,7 @@ router.put('/', (req, res) => {
   const gameArray = req.body.gameArray;
   const col = req.body.col;
   const accessCode = req.body.accessCode;
+  const players = req.body.players;
   let turn = req.body.turn;
 
   // declares variables for scope
@@ -262,6 +264,7 @@ router.put('/', (req, res) => {
       isWinner,
       turn,
       gameArray,
+      players
     }, { new: true }, (err, game) => {
       if (err) {
         return res.status(400).json(err);
@@ -273,6 +276,7 @@ router.put('/', (req, res) => {
         isWinner: game.isWinner,
         turn: game.turn,
         gameArray: game.gameArray,
+        players: game.players
       });
     });
   }

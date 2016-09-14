@@ -159,13 +159,13 @@ function newGameError(err) {
 }
 
 // creates a fresh page from the /new route and creates a brand new access code
-function newGame() {
+function newGame(name) {
   return (dispatch) => {
     const init = {
       method: 'POST',
     };
 
-    const url = 'http://localhost:8080/game';
+    const url = 'http://localhost:8080/game/' + name;
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);

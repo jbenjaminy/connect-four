@@ -24,9 +24,8 @@ class NewGame extends React.Component {
   // and after, will redirect you to /public/build/#/game
   newGame(event) {
     event.preventDefault();
-    console.log(this.name.value);
     const promise = new Promise((res) => {
-      res(this.props.dispatch(actions.newGame()));
+      res(this.props.dispatch(actions.newGame(this.name.value)));
     });
 
     promise.then(
