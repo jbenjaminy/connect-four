@@ -127,6 +127,23 @@ function checkChip(row, col, isMyChip, game) {
   return false;
 }
 
+function makeCode() {
+  let code = '';
+  const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+  for (let i = 0; i < 6; i += 1) {
+    code += possible.charAt(Math.floor(Math.random() * possible.length));
+  }
+
+  Game.find({ accessCode: code }, (err, game) => {
+    if (!game.length) {
+      return code;
+    }
+
+    return makeCode();
+  });
+}
+
 router.get('/:accessCode', (req, res) => {
   const accessCode = req.params.accessCode;
 
@@ -152,7 +169,10 @@ router.delete('/:accessCode', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  const accessCode = makeCode();
+
   Game.create({
+    accessCode,
     gameArray: [
       [0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0],
@@ -162,7 +182,6 @@ router.post('/', (req, res) => {
       [0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0],
     ],
-    accessCode: req.body.accessCode,
     isWinner: false,
     turn: 'Red',
   }, (err, game) => {
