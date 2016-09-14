@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import actions from '../redux/actions';
 
 const propTypes = {
   dispatch: PropTypes.func,
@@ -11,16 +12,17 @@ class NewGame extends React.Component {
     this.startGame = this.startGame.bind(this);
   }
 
-  startGame(event) {
+  newGame(event) {
     event.preventDefault();
     console.log(this.name.value);
+    this.props.dispatch(actions.newGame());
   }
 
   render() {
     return (
       <div>
         <h2>Enter your name:</h2>
-        <form onSubmit={this.startGame}>
+        <form onSubmit={this.newGame}>
           <input type="text" ref={(name) => { this.name = name; }} required />
           <button type="submit">Start Game</button>
         </form>
