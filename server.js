@@ -31,8 +31,11 @@ if (require.main === module) {
   });
 }
 
+// serving the public/build folder
 app.use(express.static('./public/build'));
+// using jsonParser everywhere
 app.use(jsonParser);
+// setting CORs
 app.use((req, res, next) => {
   res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
@@ -40,6 +43,7 @@ app.use((req, res, next) => {
   next();
 });
 
+// setting the route we will use 
 app.use('/game', game);
 
 exports.app = app;

@@ -121,7 +121,7 @@ function resetGame(turn, accessCode) {
       body: JSON.stringify(turn),
     };
 
-    const url = `http://localhost:8080/game/new/${accessCode}`;
+    const url = `http://localhost:8080/game/${accessCode}`;
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);
