@@ -28,8 +28,9 @@ class NewGame extends React.Component {
     const promise = new Promise((res) => {
       res(this.props.dispatch(actions.newGame()));
     });
+
     promise.then(
-      window.location.href = '/public/build/#/game'
+      window.location.href = '/#/game'
     );
   }
 

@@ -1,7 +1,7 @@
 exports.DATABASE_URL = process.env.DATABASE_URL ||
                        global.DATABASE_URL ||
                        (process.env.NODE_ENV === 'production' ?
-                         'mongodb://localhost/korean-x' :
-                         'mongodb://localhost/korean-x-dev');
+                         'mongodb://localhost/connect-four' :
+                         'mongodb://localhost/connect-four');
 
 exports.PORT = process.env.PORT || 8080;
