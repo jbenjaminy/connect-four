@@ -10,6 +10,7 @@ function reducer(state = {}, action) {
         turn: action.game.turn,
         gameArray: action.game.gameArray,
         winner: action.game.isWinner,
+        accessCode: action.game.accessCode,
       });
     }
 

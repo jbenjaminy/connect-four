@@ -16,16 +16,16 @@ class Game extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(actions.fetchGame('asdf1234'));
+    this.props.dispatch(actions.fetchGame(this.props.game.accessCode));
   }
 
   resetGame() {
     this.props.dispatch(actions.resetGame({
       turn: this.props.game.turn,
-    }));
+    }, this.props.game.accessCode));
   }
 
-  addChip(col) {
+  addChip(col, accessCode) {
     const gameArray = [];
 
     this.props.game.gameArray.forEach((column) => {
@@ -34,6 +34,7 @@ class Game extends React.Component {
 
     if (!this.props.game.winner) {
       this.props.dispatch(actions.addChip({
+        accessCode,
         gameArray,
         col,
         turn: this.props.game.turn,
@@ -57,7 +58,7 @@ class Game extends React.Component {
           <ul
             className="game-column"
             key={colIdx}
-            onClick={() => { this.addChip(colIdx); }}
+            onClick={() => { this.addChip(colIdx, this.props.game.accessCode); }}
           >
             {column}
           </ul>

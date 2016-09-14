@@ -15,7 +15,12 @@ class NewGame extends React.Component {
   newGame(event) {
     event.preventDefault();
     console.log(this.name.value);
-    this.props.dispatch(actions.newGame());
+    const promise = new Promise((res) => {
+      res(this.props.dispatch(actions.newGame()));
+    });
+    promise.then(
+      window.location.href = '/public/build/#/game'
+    );
   }
 
   render() {

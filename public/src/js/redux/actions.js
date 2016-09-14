@@ -101,7 +101,7 @@ function resetGameError(err) {
   };
 }
 
-function resetGame(turn, accessCode = 'asdf1234') {
+function resetGame(turn, accessCode) {
   return (dispatch) => {
     const init = {
       method: 'PUT',
@@ -148,7 +148,6 @@ function newGameError(err) {
 }
 
 function newGame() {
-  console.log('inside new Game action');
   return (dispatch) => {
     const init = {
       method: 'POST',

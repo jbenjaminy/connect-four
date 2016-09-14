@@ -214,6 +214,7 @@ router.post('/', (req, res) => {
 router.put('/', (req, res) => {
   const gameArray = req.body.gameArray;
   const col = req.body.col;
+  const accessCode = req.body.accessCode;
   let turn = req.body.turn;
   let isWinner;
   let isAdded = false;
@@ -236,7 +237,7 @@ router.put('/', (req, res) => {
   if (isAdded) {
     turn = turn === 'Red' ? 'Blue' : 'Red';
     Game.findOneAndUpdate({
-      accessCode: 'asdf1234',
+      accessCode,
     }, {
       isWinner,
       turn,
@@ -247,6 +248,7 @@ router.put('/', (req, res) => {
       }
 
       return res.status(200).json({
+        accessCode: game.accessCode,
         isWinner: game.isWinner,
         turn: game.turn,
         gameArray: game.gameArray,
