@@ -83,25 +83,25 @@ function addChip(game) {
   };
 }
 
-const NEW_GAME_SUCCESS = 'NEW_GAME_SUCCESS';
+const RESET_GAME_SUCCESS = 'RESET_GAME_SUCCESS';
 
-function newGameSuccess(game) {
+function resetGameSuccess(game) {
   return {
     game,
-    type: NEW_GAME_SUCCESS,
+    type: RESET_GAME_SUCCESS,
   };
 }
 
-const NEW_GAME_ERROR = 'NEW_GAME_ERROR';
+const RESET_GAME_ERROR = 'RESET_GAME_ERROR';
 
-function newGameError(err) {
+function resetGameError(err) {
   return {
-    type: NEW_GAME_ERROR,
+    type: RESET_GAME_ERROR,
     error: err,
   };
 }
 
-function newGame(turn, accessCode = 'asdf1234') {
+function resetGame(turn, accessCode = 'asdf1234') {
   return (dispatch) => {
     const init = {
       method: 'PUT',
@@ -122,9 +122,9 @@ function newGame(turn, accessCode = 'asdf1234') {
 
       return res.json();
     }).then((game) => {
-      return dispatch(newGameSuccess(game));
+      return dispatch(resetGameSuccess(game));
     }).catch((err) => {
-      return dispatch(newGameError(err));
+      return dispatch(resetGameError(err));
     });
   };
 }
@@ -141,8 +141,8 @@ exports.FETCH_GAME_ERROR = FETCH_GAME_ERROR;
 exports.fetchGameError = fetchGameError;
 exports.fetchGame = fetchGame;
 
-exports.NEW_GAME_SUCCESS = NEW_GAME_SUCCESS;
-exports.newGameSuccess = newGameSuccess;
-exports.NEW_GAME_ERROR = NEW_GAME_ERROR;
-exports.newGameError = newGameError;
-exports.newGame = newGame;
+exports.RESET_GAME_SUCCESS = RESET_GAME_SUCCESS;
+exports.resetGameSuccess = resetGameSuccess;
+exports.RESET_GAME_ERROR = RESET_GAME_ERROR;
+exports.resetGameError = resetGameError;
+exports.resetGame = resetGame;
