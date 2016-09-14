@@ -203,10 +203,9 @@ router.post('/', (req, res) => {
       turn: 'Red',
     }, (err, game) => {
       if (err) {
-        console.log('err');
         return res.status(400).json(err);
       }
-      console.log('about to respond with game');
+
       return res.status(201).json(game);
     });
   });
