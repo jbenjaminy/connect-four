@@ -42,7 +42,7 @@ class Game extends React.Component {
   }
 
   render() {
-    const winner = this.props.game.turn === 'red' ? 'Blue' : 'Red';
+    const winner = this.props.game.turn === 'Red' ? 'Blue' : 'Red';
     const message = this.props.game.winner ? `${winner} wins` : `${this.props.game.turn}'s Turn`;
 
     const game = [];
