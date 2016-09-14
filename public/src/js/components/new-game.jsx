@@ -1,4 +1,9 @@
-import React from 'react';
+import React, { PropTypes } from 'react';
+import { connect } from 'react-redux';
+
+const propTypes = {
+  dispatch: PropTypes.func,
+};
 
 class NewGame extends React.Component {
   constructor() {
@@ -24,4 +29,8 @@ class NewGame extends React.Component {
   }
 }
 
-module.exports = NewGame;
+NewGame.propTypes = propTypes;
+
+const Container = connect()(NewGame);
+
+module.exports = Container;
