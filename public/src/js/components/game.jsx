@@ -12,15 +12,15 @@ class Game extends React.Component {
   constructor() {
     super();
     this.addChip = this.addChip.bind(this);
-    this.newGame = this.newGame.bind(this);
+    this.resetGame = this.resetGame.bind(this);
   }
 
   componentDidMount() {
     this.props.dispatch(actions.fetchGame('asdf1234'));
   }
 
-  newGame() {
-    this.props.dispatch(actions.newGame({
+  resetGame() {
+    this.props.dispatch(actions.resetGame({
       turn: this.props.game.turn,
     }));
   }
@@ -70,7 +70,7 @@ class Game extends React.Component {
         <h2>Players:</h2>
         <h2>Access Code:</h2>
         <h1>Connect Four with Friends</h1>
-        <button onClick={this.newGame}>New Game</button>
+        <button onClick={this.resetGame}>New Game</button>
         <h2>{message}</h2>
         <section className="game">
           {game}
