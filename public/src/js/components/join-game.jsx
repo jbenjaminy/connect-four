@@ -1,5 +1,12 @@
 import React from 'react';
 
+/**
+ * [JoinGame description]
+ * @type {Class}
+ * @description This is the component that will render for the /join route
+ * Will allow you to enter your name and your accesscode to join the correct game
+ * IN PROGRESS
+ */
 class JoinGame extends React.Component {
   constructor() {
     super();

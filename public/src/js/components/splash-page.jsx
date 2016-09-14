@@ -1,6 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
 
+/**
+ * [SplashPage description]
+ * @type {Function}
+ * @description This is the splash page component that will render in the '/' route
+ */
 function SplashPage() {
   return (
     <div>

@@ -1,5 +1,8 @@
 import actions from './actions';
 
+// default state is {}
+// for all successes, will set the state to the following parts of the returned obj
+// for all errors, will return state
 function reducer(state = {}, action) {
   switch (action.type) {
     case actions.FETCH_GAME_SUCCESS:
