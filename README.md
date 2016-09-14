@@ -54,11 +54,11 @@ This page contains the actual game itself. There is a module on the left with th
 -render accessCode in game.jsx
 -add players' names to backend
 -render players' names in game.jsx
+-be able to join existing game using accessCode
 
 # TO DO: 
--be able to join existing game using accessCode
 -move db to mLab or something
 -implement socket.io
 -add feature where on onClick of accessCode it gives you textbox to enter friend's phone number to text accessCode.
--randomize who moves first;
--is reset game working?
+-randomize who moves first.
+

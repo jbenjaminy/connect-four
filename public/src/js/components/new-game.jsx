@@ -48,6 +48,4 @@ class NewGame extends React.Component {
 
 NewGame.propTypes = propTypes;
 
-const Container = connect()(NewGame);
-
-module.exports = Container;
+module.exports = connect()(NewGame);

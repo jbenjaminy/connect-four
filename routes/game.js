@@ -177,6 +177,21 @@ function makeCode() {
     });
   });
 }
+// helper function to look up game by access code and then add player to it
+function findGame(code) {
+
+  return new Promise((resolve, reject) => {
+    Game.find({ accessCode: code}, (err, game) => {
+      if (err) {
+        reject(err);
+      }
+      if (!game.length) {
+        reject(err);
+      }
+      resolve(game);
+    });
+  });
+}
 
 /* ---------------- '/game Endpoints' ---------------- */
 
@@ -282,6 +297,41 @@ router.put('/', (req, res) => {
   }
 });
 
+/*---------------- '/game/join Endpoint' --------------*/
+router.put('/join/:accessCode/:name', (req, res) => {
+  const accessCode = req.params.accessCode;
+  const playerTwo = req.params.name;
+
+  const promise = findGame(accessCode);
+
+  promise.then((game) => {
+    const isWinner = game[0].isWinner;
+    const turn = game[0].turn;
+    const gameArray = game[0].gameArray;
+    const players = game[0].players;
+    players.Blue = playerTwo;
+    Game.findOneAndUpdate({
+      accessCode,
+    }, {
+      isWinner,
+      turn,
+      gameArray,
+      players
+    }, { new: true }, (err, game) => {
+      if (err) {
+        return res.status(400).json(err);
+      }
+      return res.status(200).json({
+        accessCode: game.accessCode,
+        isWinner: game.isWinner,
+        turn: game.turn,
+        gameArray: game.gameArray,
+        players: game.players
+      });
+    });
+  });
+});
+
 /* ---------------- '/game/:accessCode Endpoints' ---------------- */
 
 // GET request for specific accessCode
@@ -293,7 +343,6 @@ router.get('/:accessCode', (req, res) => {
     if (err) {
       return res.status(400).json(err);
     }
-
     return res.status(200).json(game[0]);
   });
 });

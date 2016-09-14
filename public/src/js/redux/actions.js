@@ -182,6 +182,48 @@ function newGame(name) {
   };
 }
 
+/* ---------------- Join Game Actions ---------------- */
+
+const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS';
+
+function joinGameSuccess(game) {
+  return {
+    type: JOIN_GAME_SUCCESS,
+    game: game
+  };
+}
+
+const JOIN_GAME_ERROR = 'JOIN_GAME_ERROR';
+
+function joinGameError(err) {
+  return {
+    type: JOIN_GAME_ERROR,
+    error: err,
+  };
+}
+
+function joinGame(code, name) {
+  return (dispatch) => {
+    const init = {
+      method: 'PUT',
+    };
+
+    const url = 'http://localhost:8080/game/join/' + code + '/' + name;
+    return fetch(url, init).then((res) => {
+      if (res.status < 200 || res.status >= 300) {
+        const err = new Error(res.statusText);
+        err.response = res;
+        throw err;
+      }
+
+      return res.json();
+    }).then((game) => {
+      return dispatch(joinGameSuccess(game));
+    }).catch((err) => {
+      return dispatch(joinGameError(err));
+    });
+  };
+}
 
 exports.ADD_CHIP_SUCCESS = ADD_CHIP_SUCCESS;
 exports.addChipSuccess = addChipSuccess;
@@ -206,3 +248,9 @@ exports.newGameSuccess = newGameSuccess;
 exports.NEW_GAME_ERROR = NEW_GAME_ERROR;
 exports.newGameError = newGameError;
 exports.newGame = newGame;
+
+exports.JOIN_GAME_SUCCESS = JOIN_GAME_SUCCESS;
+exports.joinGameSuccess = joinGameSuccess;
+exports.JOIN_GAME_ERROR = JOIN_GAME_ERROR;
+exports.joinGameError = joinGameError;
+exports.joinGame = joinGame;
