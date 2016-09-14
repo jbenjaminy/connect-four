@@ -9,7 +9,7 @@ const propTypes = {
 class NewGame extends React.Component {
   constructor() {
     super();
-    this.startGame = this.startGame.bind(this);
+    this.newGame = this.newGame.bind(this);
   }
 
   newGame(event) {

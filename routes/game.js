@@ -135,12 +135,18 @@ function makeCode() {
     code += possible.charAt(Math.floor(Math.random() * possible.length));
   }
 
-  Game.find({ accessCode: code }, (err, game) => {
-    if (!game.length) {
-      return code;
-    }
+  return new Promise((resolve, reject) => {
+    Game.find({ accessCode: code }, (err, game) => {
+      if (err) {
+        reject(err);
+      }
 
-    return makeCode();
+      if (!game.length) {
+        resolve(code);
+      }
+
+      return makeCode();
+    });
   });
 }
 
@@ -168,28 +174,41 @@ router.delete('/:accessCode', (req, res) => {
   });
 });
 
-router.post('/', (req, res) => {
-  const accessCode = makeCode();
-
-  Game.create({
-    accessCode,
-    gameArray: [
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0],
-    ],
-    isWinner: false,
-    turn: 'Red',
-  }, (err, game) => {
+router.get('/', (req, res) => {
+  Game.find({}, (err, games) => {
     if (err) {
       return res.status(400).json(err);
     }
 
-    return res.status(201).json(game);
+    return res.status(200).json(games);
+  });
+});
+
+router.post('/', (req, res) => {
+  const promise = makeCode();
+
+  promise.then((accessCode) => {
+    Game.create({
+      accessCode,
+      gameArray: [
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+      ],
+      isWinner: false,
+      turn: 'Red',
+    }, (err, game) => {
+      if (err) {
+        console.log('err');
+        return res.status(400).json(err);
+      }
+      console.log('about to respond with game');
+      return res.status(201).json(game);
+    });
   });
 });
 

@@ -148,6 +148,7 @@ function newGameError(err) {
 }
 
 function newGame() {
+  console.log('inside new Game action');
   return (dispatch) => {
     const init = {
       method: 'POST',
