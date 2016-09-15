@@ -165,7 +165,7 @@ function newGame(name) {
       method: 'POST',
     };
 
-    const url = 'http://localhost:8080/game/' + name;
+    const url = `http://localhost:8080/game/${name}`;
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);
@@ -208,7 +208,7 @@ function joinGame(code, name) {
       method: 'PUT',
     };
 
-    const url = 'http://localhost:8080/game/join/' + code + '/' + name;
+    const url = `http://localhost:8080/game/join/${code}/${name}`;
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);

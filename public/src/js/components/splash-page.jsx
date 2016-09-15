@@ -16,6 +16,9 @@ function SplashPage() {
       <Link to="/join">
         <button>Join Game</button>
       </Link>
+      <Link to="/resume">
+        <button>Resume Game</button>
+      </Link>
     </div>
   );
 }

@@ -57,8 +57,10 @@ This page contains the actual game itself. There is a module on the left with th
 -be able to join existing game using accessCode
 -move db to mLab
 
-# TO DO: 
+# TO DO:
+-add third option 'resume game'
 -implement socket.io
 -add feature where on onClick of accessCode it gives you textbox to enter friend's phone number to text accessCode.
 -randomize who moves first.
+-make so that a player can only move for themselves and not another player.
 

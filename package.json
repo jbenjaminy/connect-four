@@ -4,7 +4,8 @@
   "description": "## Functional Specification",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "http-server server.js"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,8 @@
     "body-parser": "^1.15.2",
     "express": "^4.14.0",
     "file-system": "^2.2.1",
-    "mongoose": "^4.6.0"
+    "http-server": "^0.9.0",
+    "mongoose": "^4.6.0",
+    "socket.io": "^1.4.8"
   }
 }

@@ -11,7 +11,8 @@ const propTypes = {
  * @type {Class}
  * @description This is the component that will render for the /new route
  * will allow you to enter your name and then dispatches a post request to create
- * a new game in the database and return the game and an access code
+ * a new game in the database and return the game and an access code,
+ * adding you as 'Player One'.
  */
 class NewGame extends React.Component {
   constructor() {
