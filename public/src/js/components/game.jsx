@@ -26,6 +26,8 @@ class Game extends React.Component {
     super();
     this.addChip = this.addChip.bind(this);
     this.resetGame = this.resetGame.bind(this);
+    this.sendCode = this.sendCode.bind(this);
+    this.inputBox = this.inputBox.bind(this);
   }
 
   // after the component mounts, it will dispatch the fetch
@@ -34,6 +36,9 @@ class Game extends React.Component {
     this.props.dispatch(actions.fetchGame(this.props.game.accessCode));
   }
 
+  inputBox() {
+    this.props.dispatch(actions.addInputBox());
+  }
   // resetGame is attached to the "New Game" button in the game page
   // it will dispatch the put request with the current user turn and
   // the accesscode to reset the correct game
@@ -70,6 +75,17 @@ class Game extends React.Component {
     }
   }
 
+  sendCode(event) {
+    event.preventDefault();
+    const promise = new Promise((res) => {
+      res(this.props.dispatch(actions.sendCode(this.number.value, this.props.game.accessCode)));
+    });
+
+    // promise.then(
+    //   console.log('code sent successfully')
+    // );
+  }
+
   render() {
     // was getting error 'this.props.game.turn is undefined', 
     // so added this here and was then able to get rid 
@@ -77,6 +93,25 @@ class Game extends React.Component {
     if (!this.props.game.turn) {
       return null;
     }
+
+    // if (this.props.game.inputBox) {
+    //   return (
+    //     <div className="flex-container">
+    //       <div className='player-one'><h2>Player One: {this.props.game.players.Red}</h2>&nbsp;&nbsp;<ul><Tile value={1}/></ul></div>
+    //       <div className='player-two'><h2>Player Two: {this.props.game.players.Blue}</h2>&nbsp;&nbsp;<ul><Tile value={-1}/></ul></div>
+    //       <form onSubmit={this.sendCode}>
+    //         <input type='text' className='input-box' placeholder='Enter 10-digit phone number' ref={(number) => { this.number = number; }} required />
+    //         <button type="submit">Send Code</button>
+    //       </form>
+    //       <h1>Connect Four with Friends</h1>
+    //       <button onClick={this.resetGame}>New Game</button>
+    //       <h2>{message}</h2>
+    //       <section className="game">
+    //         {game}
+    //       </section>
+    //     </div>
+    //   );
+    // }
     // winner constant will be set to the last persons turn because
     // turn changes are handled in the backend. backend responds with the new turn
     // rather than the winner's turn and a boolean for if a winner was detected
@@ -114,7 +149,8 @@ class Game extends React.Component {
       <div className="flex-container">
         <div className='player-one'><h2>Player One: {this.props.game.players.Red}</h2>&nbsp;&nbsp;<ul><Tile value={1}/></ul></div>
         <div className='player-two'><h2>Player Two: {this.props.game.players.Blue}</h2>&nbsp;&nbsp;<ul><Tile value={-1}/></ul></div>
-        <h2>Access Code: {this.props.game.accessCode}</h2>
+        <h2 className='access-code'>Access Code: {this.props.game.accessCode}</h2>
+        <h2 className='share'>Share Access Code:</h2>&nbsp;&nbsp;<form onSubmit={this.sendCode} className='form'><input type='text' className='input-box' placeholder='Enter 10-digit phone number' ref={(number) => { this.number = number; }} required /><button type="submit">Send Code</button></form>
         <h1>Connect Four with Friends</h1>
         <button onClick={this.resetGame}>New Game</button>
         <h2>{message}</h2>

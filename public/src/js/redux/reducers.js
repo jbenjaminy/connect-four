@@ -16,7 +16,8 @@ function reducer(state = {}, action) {
         gameArray: action.game.gameArray,
         winner: action.game.isWinner,
         accessCode: action.game.accessCode,
-        players: action.game.players
+        players: action.game.players,
+        inputBox: false
       });
     }
 
@@ -24,7 +25,18 @@ function reducer(state = {}, action) {
     case actions.ADD_CHIP_ERROR:
     case actions.RESET_GAME_ERROR:
     case actions.NEW_GAME_ERROR: 
-    case actions.JOIN_GAME_ERROR: {
+    case actions.JOIN_GAME_ERROR: 
+    case actions.SEND_CODE_ERROR: {
+      return state;
+    }
+
+    // case actions.ADD_INPUT_BOX: {
+    //   return Object.assign({}, state, {
+    //     inputBox: true
+    //   });
+    // }
+
+    case actions.SEND_CODE_SUCCESS: {
       return state;
     }
 

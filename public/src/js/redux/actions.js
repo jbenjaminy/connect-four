@@ -23,7 +23,7 @@ function fetchGameError(error) {
 // sends a fetch request with an accessCode to get the correct game back
 function fetchGame(accessCode) {
   return (dispatch) => {
-    const url = `http://localhost:8080/game/${accessCode}`;
+    const url = `/game/${accessCode}`;
     return fetch(url).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);
@@ -72,7 +72,7 @@ function addChip(game) {
       body: JSON.stringify(game),
     };
 
-    const url = 'http://localhost:8080/game';
+    const url = '/game';
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);
@@ -121,7 +121,7 @@ function resetGame(turn, accessCode) {
       body: JSON.stringify(turn),
     };
 
-    const url = `http://localhost:8080/game/${accessCode}`;
+    const url = `/game/${accessCode}`;
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);
@@ -165,7 +165,7 @@ function newGame(name) {
       method: 'POST',
     };
 
-    const url = `http://localhost:8080/game/${name}`;
+    const url = `/game/${name}`;
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);
@@ -208,7 +208,7 @@ function joinGame(code, name) {
       method: 'PUT',
     };
 
-    const url = `http://localhost:8080/game/join/${code}/${name}`;
+    const url = `/game/join/${code}/${name}`;
     return fetch(url, init).then((res) => {
       if (res.status < 200 || res.status >= 300) {
         const err = new Error(res.statusText);
@@ -221,6 +221,54 @@ function joinGame(code, name) {
       return dispatch(joinGameSuccess(game));
     }).catch((err) => {
       return dispatch(joinGameError(err));
+    });
+  };
+}
+
+const ADD_INPUT_BOX = 'ADD_INPUT_BOX';
+
+function addInputBox() {
+  return {
+    type: ADD_INPUT_BOX,
+  };
+}
+
+const SEND_CODE_SUCCESS = 'SEND_CODE_SUCCESS';
+
+function sendCodeSuccess() {
+  return {
+    type: SEND_CODE_SUCCESS
+  };
+}
+
+const SEND_CODE_ERROR = 'SEND_CODE_ERROR';
+
+function sendCodeError(err) {
+  return {
+    type: SEND_CODE_ERROR,
+    error: err,
+  };
+}
+
+function sendCode(number, code) {
+  return (dispatch) => {
+    const init = {
+      method: 'POST',
+    };
+
+    const url = `/game/share/${number}/${code}`;
+    return fetch(url, init).then((res) => {
+      if (res.status < 200 || res.status >= 300) {
+        const err = new Error(res.statusText);
+        err.response = res;
+        throw err;
+      }
+
+      return res.json();
+    }).then(() => {
+      return dispatch(sendCodeSuccess());
+    }).catch((err) => {
+      return dispatch(sendCodeError(err));
     });
   };
 }
@@ -254,3 +302,12 @@ exports.joinGameSuccess = joinGameSuccess;
 exports.JOIN_GAME_ERROR = JOIN_GAME_ERROR;
 exports.joinGameError = joinGameError;
 exports.joinGame = joinGame;
+
+exports.ADD_INPUT_BOX = ADD_INPUT_BOX;
+exports.addInputBox = addInputBox;
+
+exports.SEND_CODE_SUCCESS = SEND_CODE_SUCCESS;
+exports.sendCodeSuccess = sendCodeSuccess;
+exports.SEND_CODE_ERROR = SEND_CODE_ERROR;
+exports.sendCodeError = sendCodeError;
+exports.sendCode = sendCode;

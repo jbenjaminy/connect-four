@@ -56,11 +56,12 @@ This page contains the actual game itself. There is a module on the left with th
 -render players' names in game.jsx
 -be able to join existing game using accessCode
 -move db to mLab
+-add third option 'resume game'
+-add feature where you can text access code to friends.
+
 
 # TO DO:
--add third option 'resume game'
 -implement socket.io
--add feature where on onClick of accessCode it gives you textbox to enter friend's phone number to text accessCode.
 -randomize who moves first.
 -make so that a player can only move for themselves and not another player.
 

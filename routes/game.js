@@ -3,6 +3,10 @@ const Game = require('../models/game');
 
 const router = express.Router();
 
+const twilio = require('twilio');
+const sid = process.env.sid || require('./twilio/sid') ;
+const token = process.env.token || require('./twilio/token');
+
 // Helper function to determine what color the chip is by returning true or false
 // It will take in the chip as a param and see if it is equal to 1, if so it is red
 function isRed(chip) {
@@ -193,6 +197,27 @@ function findGame(code) {
   });
 }
 
+/* ---------------- Twilio Endpoint' ---------------- */
+
+const client = new twilio.RestClient(sid, token);
+
+router.post('/share/:number/:code', function(request, response) {
+  const number = request.params.number;
+  const code = request.params.code;
+  let recipient = '+1' + number;
+  let message = 'Join me for a game of connect-four with this access code: ' + code;
+
+  client.messages.create({
+      body: message, 
+      to: recipient,  
+      from: '+18323429579'
+  }, function(err) {
+      if(err) {
+        console.log(err);
+      }
+      return response.json();
+  });
+});
 /* ---------------- '/game Endpoints' ---------------- */
 
 // GET endpoint that will return all the games in the db
