@@ -55,9 +55,9 @@ This page contains the actual game itself. There is a module on the left with th
 -add players' names to backend
 -render players' names in game.jsx
 -be able to join existing game using accessCode
+-move db to mLab
 
 # TO DO: 
--move db to mLab or something
 -implement socket.io
 -add feature where on onClick of accessCode it gives you textbox to enter friend's phone number to text accessCode.
 -randomize who moves first.
