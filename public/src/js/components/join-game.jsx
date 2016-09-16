@@ -21,6 +21,7 @@ class JoinGame extends React.Component {
   joinGame(event) {
     event.preventDefault();
     const promise = new Promise((res) => {
+      console.log('in join game promise');
       res(this.props.dispatch({
         type: 'server/joinGame',
         data: {
@@ -29,9 +30,10 @@ class JoinGame extends React.Component {
         }
       }));
     });
-    promise.then(
+    promise.then(function() {
+      console.log('switch from splash page to game page in JOINGAME')
       window.location.href = '/#/game'
-    );
+    });
   }
 
   render() {

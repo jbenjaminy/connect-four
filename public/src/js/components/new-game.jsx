@@ -25,6 +25,7 @@ class NewGame extends React.Component {
   newGame(event) {
     event.preventDefault();
     const promise = new Promise((res) => {
+      console.log('in new game promise');
       res(this.props.dispatch({
         type: 'server/newGame',
         data: {
@@ -32,9 +33,10 @@ class NewGame extends React.Component {
         }
       }));
     });
-    promise.then(
+    promise.then(function() {
+      console.log('in new game promise.then');
       window.location.href = '/#/game'
-    );
+    });
   }
 
   render() {

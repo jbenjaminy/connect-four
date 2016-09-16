@@ -24,6 +24,7 @@ class ResumeGame extends React.Component {
   resumeGame(event) {
     event.preventDefault();
     const promise = new Promise((res) => {
+      console.log('in resume game promise');
       res(this.props.dispatch({
         type: 'server/findGame',
         data: {
@@ -31,9 +32,10 @@ class ResumeGame extends React.Component {
         }
       }));
     });
-    promise.then(
+    promise.then(function() {
+      console.log('in resume game promise.then');
       window.location.href = '/#/game'
-    );
+    });
   }
 
   render() {
