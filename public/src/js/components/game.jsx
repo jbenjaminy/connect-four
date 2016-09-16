@@ -24,7 +24,7 @@ class Game extends React.Component {
   constructor() {
     super();
     this.componentDidMount = this.componentDidMount.bind(this);
-    this.sendCode = this.sendCode.bind(this);
+    // this.sendCode = this.sendCode.bind(this);
     this.resetGame = this.resetGame.bind(this);
     this.addChip = this.addChip.bind(this);
   }
@@ -39,16 +39,18 @@ class Game extends React.Component {
     });
   }
 
-  sendCode(event) {
-    event.preventDefault();
-    this.props.dispatch({
-      type: 'server/shareCode',
-      data: {
-        phoneNumber: this.number.value, 
-        accessCode: this.props.game.accessCode
-      }
-    });
-  }
+  // sendCode(event) {
+  //   event.preventDefault();
+  //   this.props.dispatch({
+  //     type: 'server/shareCode',
+  //     data: {
+  //       phoneNumber: this.number.value, 
+  //       accessCode: this.props.game.accessCode
+  //     }
+  //   });
+  // }
+  // <h2 className='share'>Share Access Code:</h2>&nbsp;&nbsp;<form onSubmit={this.sendCode} className='form'><input type='text' className='input-box' placeholder='Enter 10-digit phone number' ref={(number) => { this.number = number; }} required /><button type="submit">Send Code</button></form>
+
 
   // resetGame is attached to the "New Game" button in the game page
   // it will dispatch the put request with the current user turn and
@@ -136,7 +138,6 @@ class Game extends React.Component {
         <div className='player-one'><h2>Player One: {this.props.game.players.Red}</h2>&nbsp;&nbsp;<ul><Tile value={1}/></ul></div>
         <div className='player-two'><h2>Player Two: {this.props.game.players.Blue}</h2>&nbsp;&nbsp;<ul><Tile value={-1}/></ul></div>
         <h2 className='access-code'>Access Code: {this.props.game.accessCode}</h2>
-        <h2 className='share'>Share Access Code:</h2>&nbsp;&nbsp;<form onSubmit={this.sendCode} className='form'><input type='text' className='input-box' placeholder='Enter 10-digit phone number' ref={(number) => { this.number = number; }} required /><button type="submit">Send Code</button></form>
         <h1>Connect Four with Friends</h1>
         <button onClick={this.resetGame}>New Game</button>
         <h2>{message}</h2>

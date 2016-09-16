@@ -11,7 +11,7 @@ const join = require('./game').join;
 const find = require('./game').find;
 const restart = require('./game').restart;
 const add = require('./game').add;
-const share = require('./twilio').share;
+// const share = require('./twilio');
 
 app.use(express.static('./public/build'));
 
@@ -19,33 +19,42 @@ app.use(express.static('./public/build'));
 io.on('connection', function(socket) {
   console.log("Socket connected: " + socket.id);
   socket.on('action', (action) => {
-    if(action.type === 'server/newGame') {
+    if (action.type === 'server/newGame') {
       const promise = newGame(action.data);
       promise.then((game) => {
-        console.log('server.js game', game)
         socket.emit('action', {type:'update', data: game});
       });
     }
-    if(action.type === 'server/joinGame') {
-      let game = join(action.data);
-      socket.emit('action', {type:'update', data: game });
+    if (action.type === 'server/joinGame') {
+      const promise = join(action.data);
+      promise.then((game) => {
+        socket.emit('action', {type:'update', data: game });
+      });
     }
-    if(action.type === 'server/findGame') {
-      let game = find(action.data);
-      socket.emit('action', {type:'update', data: game });
+    if (action.type === 'server/findGame') {
+      const promise = find(action.data);
+      promise.then((game) => {
+        socket.emit('action', {type:'update', data: game });
+      });
     }
-    if(action.type === 'server/resetGame') {
-      let game = restart(action.data);
-      socket.emit('action', {type:'update', data: game });
+    if (action.type === 'server/resetGame') {
+      const promise = restart(action.data);
+      promise.then((game) => {
+        socket.emit('action', {type:'update', data: game });
+      });
     }
-    if(action.type === 'server/addChip') {
-      let game = add(action.data);
-      socket.emit('action', {type:'update', data: game });
+    if (action.type === 'server/addChip') {
+      const promise = add(action.data);
+      promise.then((game) => {
+        socket.emit('action', {type:'update', data: game });
+      });
     }
-    if(action.type === 'server/shareCode') {
-      let message = share(action.data);
-      socket.emit('action', {type:'sent', data: message });
-    }
+    // if (action.type === 'server/shareCode') {
+    //   const promise = share(action.data);
+    //   promise.then((message) => {
+    //     socket.emit('action', {type:'sent', data: message });
+    //   });
+    // }
   });
 });
 

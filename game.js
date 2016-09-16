@@ -4,11 +4,13 @@ const Game = require('./models/game');
 /* FIND GAME BY ACCESS CODE */
 let find = (data) => {
   let accessCode = data.accessCode;
-  Game.find({ accessCode }, (err, game) => {
-    if (err) {
-      return console.error(err);
-    }
-    return game[0];
+  return new Promise((resolve, reject) => {
+    Game.find({ accessCode }, (err, game) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(game[0]);
+    });
   });
 }
 
@@ -44,14 +46,12 @@ let newGame = (data) => {
         isWinner: false,
         turn: 'Red',
         players: {'Red': playerOne, 'Blue': 'Blue'}
-        }, (err, game) => {
-          console.log('game.js game', game)
-          if (err) {
-            reject(err);
-          }
-          resolve(game);
+      }, (err, game) => {
+        if (err) {
+          reject(err);
         }
-      );
+        resolve(game);
+      });
     });
   });
 }
@@ -60,20 +60,22 @@ let newGame = (data) => {
 let join = (data) => {
   let accessCode = data.accessCode;
   let playerTwo = data.playerTwo;
-  const promise = findPromise(accessCode);
-  promise.then((game) => {
-    let players = game[0].players;
-    players.Blue = playerTwo;
-    Game.findOneAndUpdate({ accessCode,}, {
-      isWinner: game[0].isWinner,
-      turn: game[0].turn,
-      gameArray: game[0].gameArray,
-      players: players
-    }, { new: true }, (err, game) => {
-      if (err) {
-        return console.error(err);
-      }
-      return game;
+  return new Promise((resolve, reject) => {
+    const promise = findPromise(accessCode);
+    promise.then((game) => {
+      let players = game[0].players;
+      players.Blue = playerTwo;
+      Game.findOneAndUpdate({ accessCode,}, {
+        isWinner: game[0].isWinner,
+        turn: game[0].turn,
+        gameArray: game[0].gameArray,
+        players: players
+      }, { new: true }, (err, game) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(game);
+      });
     });
   });
 }
@@ -82,27 +84,29 @@ let join = (data) => {
 let restart = (data) => {
   let accessCode = data.accessCode;
   let turn = data.turn;
-  // switches current turn to let loser move first
-  turn = turn === 'Red' ? 'Blue' : 'Red';
+  return new Promise((resolve, reject) => {
+    // switches current turn to let loser move first
+    turn = turn === 'Red' ? 'Blue' : 'Red';
 
-  Game.findOneAndUpdate(
-    { accessCode }, {
-      turn: turn,
-      gameArray: [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-      ],
-      isWinner: false,
-    }, { new: true }, (err, game) => {
-    if (err) {
-      return console.error(err);
-    }
-    return game;
+    Game.findOneAndUpdate(
+      { accessCode }, {
+        turn: turn,
+        gameArray: [
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+        ],
+        isWinner: false,
+      }, { new: true }, (err, game) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(game);
+    });
   });
 }
 
@@ -126,39 +130,41 @@ let add = (data) => {
   // declares variables for scope
   let isWinner;
   let isAdded = false;
-  // checks every chip in the column for a free slot starting from the bottom
-  for (let i = 5; i >= 0; i -= 1) {
-    // if the slot is 0, it will attempt to fill it
-    if (!gameArray[col][i]) {
-      // if its red's turn, it will fill it with '1' and call checkChip with the 'isRed' func
-      // otherwise it will fill it with '-1' and call checkChip with the 'isBlue' func
-      if (turn === 'Red') {
-        gameArray[col][i] = 1;
-        isWinner = checkChip(i, col, isRed, gameArray);
-      } else {
-        gameArray[col][i] = -1;
-        isWinner = checkChip(i, col, isBlue, gameArray);
+  return new Promise((resolve, reject) => {
+    // checks every chip in the column for a free slot starting from the bottom
+    for (let i = 5; i >= 0; i -= 1) {
+      // if the slot is 0, it will attempt to fill it
+      if (!gameArray[col][i]) {
+        // if its red's turn, it will fill it with '1' and call checkChip with the 'isRed' func
+        // otherwise it will fill it with '-1' and call checkChip with the 'isBlue' func
+        if (turn === 'Red') {
+          gameArray[col][i] = 1;
+          isWinner = checkChip(i, col, isRed, gameArray);
+        } else {
+          gameArray[col][i] = -1;
+          isWinner = checkChip(i, col, isBlue, gameArray);
+        }
+        // set to true to determine if the move was valid
+        isAdded = true;
+        break;
       }
-      // set to true to determine if the move was valid
-      isAdded = true;
-      break;
     }
-  }
-  // if chip was added, finds and changes game in db
-  if (isAdded) {
-    turn = turn === 'Red' ? 'Blue' : 'Red';
-    Game.findOneAndUpdate({ accessCode }, {
-      isWinner: isWinner,
-      turn: turn,
-      gameArray: gameArray,
-      players: players
-    }, { new: true }, (err, game) => {
-      if (err) {
-        return console.error(err);
-      }
-      return game;
-    });
-  }
+    // if chip was added, finds and changes game in db
+    if (isAdded) {
+      turn = turn === 'Red' ? 'Blue' : 'Red';
+      Game.findOneAndUpdate({ accessCode }, {
+        isWinner: isWinner,
+        turn: turn,
+        gameArray: gameArray,
+        players: players
+      }, { new: true }, (err, game) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(game);
+      });
+    }
+  });
 }
 /*----------------- HELPER FUNCTIONS -----------------*/
 
