@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Tile from './tile';
-import actions from '../redux/actions';
 
 /**
  * [propTypes description]
@@ -24,28 +23,44 @@ class Game extends React.Component {
   // function binding must be done in the constructor
   constructor() {
     super();
-    this.addChip = this.addChip.bind(this);
-    this.resetGame = this.resetGame.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.sendCode = this.sendCode.bind(this);
-    this.inputBox = this.inputBox.bind(this);
+    this.resetGame = this.resetGame.bind(this);
+    this.addChip = this.addChip.bind(this);
   }
 
   // after the component mounts, it will dispatch the fetch
   // request and pass in the accessCode stored in the state
   componentDidMount() {
-    this.props.dispatch(actions.fetchGame(this.props.game.accessCode));
+    this.props.dispatch({ 
+      type: 'server/findGame',
+      data: { 
+        accessCode: this.props.game.accessCode }
+    });
   }
 
-  inputBox() {
-    this.props.dispatch(actions.addInputBox());
+  sendCode(event) {
+    event.preventDefault();
+    this.props.dispatch({
+      type: 'server/shareCode',
+      data: {
+        phoneNumber: this.number.value, 
+        accessCode: this.props.game.accessCode
+      }
+    });
   }
+
   // resetGame is attached to the "New Game" button in the game page
   // it will dispatch the put request with the current user turn and
   // the accesscode to reset the correct game
   resetGame() {
-    this.props.dispatch(actions.resetGame({
-      turn: this.props.game.turn,
-    }, this.props.game.accessCode));
+    this.props.dispatch({ 
+      type: 'server/resetGame',
+      data: {
+        accessCode: this.props.game.accessCode,
+        turn: this.props.game.turn 
+      }
+    });
   }
 
   /**
@@ -53,37 +68,27 @@ class Game extends React.Component {
    * @param {number} col
    * @param {string} accessCode
    */
-  addChip(col, accessCode) {
+  addChip(col) {
     const gameArray = [];
-
     // this is to copy the 2D array without mutating it
     // this.props.game = state
     this.props.game.gameArray.forEach((column) => {
       gameArray.push(column.slice());
     });
-
     // if there is no winner, dispatch the addChip action
     // if there is a winner, you cannot add another chip
     if (!this.props.game.winner) {
-      this.props.dispatch(actions.addChip({
-        accessCode,
-        gameArray,
-        col,
-        turn: this.props.game.turn,
-        players: this.props.game.players
-      }));
+      this.props.dispatch({
+        type: 'server/addChip',
+        data: {
+          accessCode: this.props.game.accessCode,
+          gameArray: gameArray,
+          players: this.props.game.players,
+          col: col,
+          turn: this.props.game.turn
+        }
+      });
     }
-  }
-
-  sendCode(event) {
-    event.preventDefault();
-    const promise = new Promise((res) => {
-      res(this.props.dispatch(actions.sendCode(this.number.value, this.props.game.accessCode)));
-    });
-
-    // promise.then(
-    //   console.log('code sent successfully')
-    // );
   }
 
   render() {
@@ -94,24 +99,6 @@ class Game extends React.Component {
       return null;
     }
 
-    // if (this.props.game.inputBox) {
-    //   return (
-    //     <div className="flex-container">
-    //       <div className='player-one'><h2>Player One: {this.props.game.players.Red}</h2>&nbsp;&nbsp;<ul><Tile value={1}/></ul></div>
-    //       <div className='player-two'><h2>Player Two: {this.props.game.players.Blue}</h2>&nbsp;&nbsp;<ul><Tile value={-1}/></ul></div>
-    //       <form onSubmit={this.sendCode}>
-    //         <input type='text' className='input-box' placeholder='Enter 10-digit phone number' ref={(number) => { this.number = number; }} required />
-    //         <button type="submit">Send Code</button>
-    //       </form>
-    //       <h1>Connect Four with Friends</h1>
-    //       <button onClick={this.resetGame}>New Game</button>
-    //       <h2>{message}</h2>
-    //       <section className="game">
-    //         {game}
-    //       </section>
-    //     </div>
-    //   );
-    // }
     // winner constant will be set to the last persons turn because
     // turn changes are handled in the backend. backend responds with the new turn
     // rather than the winner's turn and a boolean for if a winner was detected
@@ -137,13 +124,12 @@ class Game extends React.Component {
         <ul
           className="game-column"
           key={colIdx}
-          onClick={() => { this.addChip(colIdx, this.props.game.accessCode); }}
+          onClick={() => { this.addChip(colIdx); }}
         >
           {column}
         </ul>
       );
     });
-
 
     return (
       <div className="flex-container">

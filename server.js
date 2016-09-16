@@ -1,11 +1,53 @@
 const express = require('express');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const config = require('./config');
-const game = require('./routes/game');
-
 const app = express();
-const jsonParser = bodyParser.json();
+
+const http = require('http');
+const server = http.createServer();
+const socket_io = require('socket.io');
+const io = socket_io();
+
+const mongoose = require('mongoose');
+const config = require('./config');
+
+const newGame = require('./game');
+const join = require('./game');
+const find = require('./game');
+const restart = require('./game');
+const add = require('./game');
+const share = require('./twilio');
+
+app.use(express.static('./public/build'));
+
+// SOCKET CONNECTIONS
+io.on('connection', function(socket) {
+  console.log("Socket connected: " + socket.id);
+  socket.on('action', (action) => {
+    if(action.type === 'server/newGame') {
+      let game = newGame(action.data);
+      socket.emit('action', {type:'update', data: game});
+    }
+    if(action.type === 'server/joinGame') {
+      let game = join(action.data);
+      socket.emit('action', {type:'update', data: game });
+    }
+    if(action.type === 'server/findGame') {
+      let game = find(action.data);
+      socket.emit('action', {type:'update', data: game });
+    }
+    if(action.type === 'server/resetGame') {
+      let game = restart(action.data);
+      socket.emit('action', {type:'update', data: game });
+    }
+    if(action.type === 'server/addChip') {
+      let game = add(action.data);
+      socket.emit('action', {type:'update', data: game });
+    }
+    if(action.type === 'server/shareCode') {
+      let message = share(action.data);
+      socket.emit('action', {type:'sent', data: message });
+    }
+  });
+});
 
 // RUN SERVER FUNCTION
 function runServer(callback) {
@@ -14,7 +56,8 @@ function runServer(callback) {
       return callback(err);
     }
 
-    app.listen(config.PORT, () => {
+    server.listen(config.PORT, () => {
+      io.attach(server);
       console.log(`Listening on localhost: ${config.PORT}`);
       if (callback) {
         callback();
@@ -30,21 +73,6 @@ if (require.main === module) {
     }
   });
 }
-
-// serving the public/build folder
-app.use(express.static('./public/build'));
-// using jsonParser everywhere
-app.use(jsonParser);
-// setting CORs
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
-  next();
-});
-
-// setting the route we will use 
-app.use('/game', game);
 
 exports.app = app;
 exports.runServer = runServer;

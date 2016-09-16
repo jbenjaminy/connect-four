@@ -1,6 +1,5 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
-import actions from '../redux/actions';
 
 const propTypes = {
   dispatch: PropTypes.func,
@@ -25,9 +24,13 @@ class ResumeGame extends React.Component {
   resumeGame(event) {
     event.preventDefault();
     const promise = new Promise((res) => {
-      res(this.props.dispatch(actions.fetchGame(this.code.value)));
+      res(this.props.dispatch({
+        type: 'server/findGame',
+        data: {
+          accessCode: this.code.value
+        }
+      }));
     });
-
     promise.then(
       window.location.href = '/#/game'
     );
