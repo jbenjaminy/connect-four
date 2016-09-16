@@ -1,10 +1,7 @@
 const express = require('express');
 const app = express();
-
-const http = require('http');
-const server = http.createServer();
-const socket_io = require('socket.io');
-const io = socket_io();
+const server = require('http').Server(app);
+const io = require('socket.io')(server);
 
 const mongoose = require('mongoose');
 const config = require('./config');
@@ -57,7 +54,6 @@ function runServer(callback) {
     }
 
     server.listen(config.PORT, () => {
-      io.attach(server);
       console.log(`Listening on localhost: ${config.PORT}`);
       if (callback) {
         callback();
