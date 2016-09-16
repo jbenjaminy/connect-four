@@ -1,0 +1,175 @@
+body {
+  margin: 0;
+  background-color: #E2E2E2;
+  color: #E2E2E2;
+  font-family: 'Open Sans', sans-serif;
+}
+.splash-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+}
+.splash-container .splash-page {
+  background-color: #30638E;
+  padding: 3rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.splash-container .splash-page h1 {
+  font-family: 'Francois One', sans-serif;
+  color: #E2E2E2;
+}
+.splash-container .splash-page h2 {
+  margin: 0;
+  font-family: 'Francois One', sans-serif;
+  color: #E2E2E2;
+}
+.splash-container .splash-page form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.splash-container .splash-page input {
+  border: none;
+  border-radius: 0.2rem;
+  padding: 0.3rem;
+  width: 190px;
+  margin-top: 0.2rem;
+  margin-bottom: 1rem;
+}
+.splash-container .splash-page button {
+  background-color: #E2D258;
+  border: none;
+  padding: 0.5rem;
+  border-radius: 0.8rem;
+  color: #30638E;
+  margin: 0.2rem;
+}
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+.flex-container .game-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  background-color: #30638E;
+}
+.flex-container .game-header .players {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.flex-container .game-header > div {
+  margin: 1rem 2rem;
+  height: 6rem;
+}
+.flex-container .game-header > div h1 {
+  font-family: 'Francois One', sans-serif;
+  color: #E2D258;
+  margin: 0.3rem;
+}
+.flex-container .game-header > div h2 {
+  font-size: 1rem;
+  text-align: center;
+}
+.flex-container .game-header .player-one,
+.flex-container .game-header .player-two {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.flex-container .game-header .player-one h2,
+.flex-container .game-header .player-two h2 {
+  display: inline-block;
+  margin: 0;
+  font-size: 0.8rem;
+}
+.flex-container .game-header .player-one ul,
+.flex-container .game-header .player-two ul {
+  display: inline-block;
+  margin: 0;
+  padding-left: 0;
+}
+.flex-container .game-header .player-one ul li,
+.flex-container .game-header .player-two ul li {
+  list-style: none;
+  padding: 0.5rem;
+  margin: 0;
+  margin-right: 0.3rem;
+  border-radius: 0.5rem;
+}
+.flex-container .game-header .player-one ul .red,
+.flex-container .game-header .player-two ul .red {
+  background-color: #D1495B;
+}
+.flex-container .game-header .player-one ul .blue,
+.flex-container .game-header .player-two ul .blue {
+  background-color: #00798C;
+}
+.flex-container .game-header .title-header {
+  justify-content: center;
+  align-items: center;
+}
+.flex-container .game-header .access-module {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.flex-container .game-header .access-module button {
+  background-color: #E2D258;
+  border: none;
+  width: 120px;
+  padding: 0.5rem;
+  border-radius: 0.8rem;
+}
+.flex-container .game-header .access-code,
+.flex-container .game-header .new-game {
+  font-size: 0.8rem;
+}
+.flex-container .share,
+.flex-container .form {
+  display: inline-block;
+}
+.flex-container .input-box {
+  width: 150px;
+}
+.flex-container .game {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.flex-container .game div {
+  display: flex;
+  flex-direction: row;
+}
+.flex-container .game ul {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.flex-container .game ul li {
+  list-style: none;
+  padding: 2rem;
+  background-color: #E2D258;
+  margin: 0.25rem;
+  border-radius: 1rem;
+}
+.flex-container .game ul li.red {
+  background-color: #D1495B;
+}
+.flex-container .game ul li.blue {
+  background-color: #30638E;
+}
+/*# sourceMappingURL=public.1.0.0.css.map */
