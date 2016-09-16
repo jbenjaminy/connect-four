@@ -8,18 +8,22 @@ import { Link } from 'react-router';
  */
 function SplashPage() {
   return (
-    <div>
-      <h1>Connect Four with Friends</h1>
-      <Link to="/new">
-        <button>New Game</button>
-      </Link>
-      <Link to="/join">
-        <button>Join Game</button>
-      </Link>
-      <Link to="/resume">
-        <button>Resume Game</button>
-      </Link>
-    </div>
+    <section className="splash-container">
+      <div className="splash-page">
+        <h1>Connect Four with Friends</h1>
+        <div>
+          <Link to="/new">
+            <button>New Game</button>
+          </Link>
+          <Link to="/join">
+            <button>Join Game</button>
+          </Link>
+          <Link to="/resume">
+            <button>Resume Game</button>
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }
 

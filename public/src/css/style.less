@@ -1,43 +1,159 @@
-.flex-container {
-  .player-one, .player-two {
-    padding-bottom: 10px;
+body {
+  margin: 0;
+  background-color: #E2E2E2;
+  color: #E2E2E2;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.splash-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10rem;
+
+  .splash-page {
+    background-color: #30638E;
+    padding: 3rem;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    h1 {
+      font-family: 'Francois One', sans-serif;
+      color: #E2D258;
+    }
+
     h2 {
-      display: inline-block;
       margin: 0;
     }
 
-    ul {
-      display: inline-block;
-      margin: 0;
-      padding-left: 0;
-      margin-bottom: -8.4px;
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
 
-      li {  
-        list-style: none;
-        padding: 1rem;
-        margin: 0;
-        border-radius: 0.5rem;
-      }
+    input {
+      border: none;
+      border-radius: 0.2rem;
+      padding: 0.3rem;
+      width: 190px;
+      margin-top: 0.2rem;
+      margin-bottom: 1rem;
+    }
 
-      .red {
-        background-color: red;
-      }
-
-      .blue {
-        background-color: blue;
-      }
+    button {
+      background-color: #E2D258;
+      border: none;
+      padding: 0.5rem;
+      border-radius: 0.8rem;
+      color: #30638E;
+      margin: 0.2rem;
     }
   }
-  // .access-code {
-  //   color: inherit;
-  //   text-decoration: none;
-  //   display: inline-block;
-  // }
+}
 
-  // .access:hover {
-  //   color: grey;
-    
-  // }
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+
+  .game-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    background-color: #30638E;
+
+    .players {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    > div {
+      margin: 1rem 2rem;
+      height: 6rem;
+
+      h1 {
+        font-family: 'Francois One', sans-serif;
+        color: #E2D258;
+        margin: 0.3rem;
+      }
+
+      h2 {
+        font-size: 1rem;
+        text-align: center;
+      }
+    }
+
+    .player-one,
+    .player-two {
+      padding: 5px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      h2 {
+        display: inline-block;
+        margin: 0;
+        font-size: 0.8rem;
+      }
+
+      ul {
+        display: inline-block;
+        margin: 0;
+        padding-left: 0;
+
+        li {
+          list-style: none;
+          padding: 0.5rem;
+          margin: 0;
+          margin-right: 0.3rem;
+          border-radius: 0.5rem;
+        }
+
+        .red {
+          background-color: #D1495B;
+        }
+
+        .blue {
+          background-color: #00798C;
+        }
+      }
+    }
+
+    .title-header {
+      justify-content: center;
+      align-items: center;
+    }
+
+    .access-module {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+
+      button {
+        background-color: #E2D258;
+        border: none;
+        width: 120px;
+        padding: 0.5rem;
+        border-radius: 0.8rem;
+      }
+    }
+
+    .access-code,
+    .new-game {
+      font-size: 0.8rem;
+    }
+
+  }
 
   .share, .form {
     display: inline-block;
@@ -50,25 +166,32 @@
   .game {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+
+    div {
+      display: flex;
+      flex-direction: row;
+    }
 
     ul {
       display: flex;
       flex-direction: column;
+      padding: 0;
 
       li {
         list-style: none;
         padding: 2rem;
-        background-color: yellow;
+        background-color: #E2D258;
         margin: 0.25rem;
         border-radius: 1rem;
       }
 
       li.red {
-        background-color: red;
+        background-color: #D1495B;
       }
 
       li.blue {
-        background-color: blue;
+        background-color: #30638E;
       }
     }
   }

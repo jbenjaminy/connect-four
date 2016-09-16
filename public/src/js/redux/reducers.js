@@ -1,7 +1,7 @@
 function reducer(state = {}, action) {
   switch (action.type) {
     case 'update': {
-      console.log('game -->', action.data);
+      console.log('game -->', action);
       return Object.assign({}, state, {
         turn: action.data.turn,
         gameArray: action.data.gameArray,

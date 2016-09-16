@@ -41,13 +41,17 @@ class NewGame extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Enter your name:</h2>
-        <form onSubmit={this.newGame}>
-          <input type="text" ref={(name) => { this.name = name; }} required />
-          <button type="submit">Start Game</button>
-        </form>
-      </div>
+      <section className="splash-container">
+        <div className="splash-page">
+          <div>
+            <h2>Enter your name:</h2>
+            <form onSubmit={this.newGame}>
+              <input type="text" ref={(name) => { this.name = name; }} required />
+              <button type="submit">Start Game</button>
+            </form>
+          </div>
+        </div>
+      </section>
     );
   }
 }

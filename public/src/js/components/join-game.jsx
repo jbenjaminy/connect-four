@@ -38,17 +38,21 @@ class JoinGame extends React.Component {
 
   render() {
     return (
-      <div>
-        <form onSubmit={this.joinGame}>
-          <h2>Enter your name:</h2>
-          <input type="text" ref={(name) => { this.name = name; }} required />
-
-          <h2>Access Code:</h2>
-          <input type="text" ref={(code) => { this.code = code; }} required />
-
-          <button type="submit">Join Game</button>
-        </form>
-      </div>
+      <section className="splash-container">
+        <div className="splash-page">
+          <form onSubmit={this.joinGame}>
+            <div>
+              <h2>Enter your name:</h2>
+              <input type="text" ref={(name) => { this.name = name; }} required />
+            </div>
+            <div>
+              <h2>Access Code:</h2>
+              <input type="text" ref={(code) => { this.code = code; }} required />
+            </div>
+            <button type="submit">Join Game</button>
+          </form>
+        </div>
+      </section>
     );
   }
 }

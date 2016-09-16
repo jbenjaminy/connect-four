@@ -40,13 +40,15 @@ class ResumeGame extends React.Component {
 
   render() {
     return (
-      <div>
-        <h2>Access Code:</h2>
-        <form onSubmit={this.resumeGame}>
-          <input type="text" ref={(code) => { this.code = code; }} required />
-          <button type="submit">Resume Game</button>
-        </form>
-      </div>
+      <section className="splash-container">
+        <div className="splash-page">
+          <h2>Access Code:</h2>
+          <form onSubmit={this.resumeGame}>
+            <input type="text" ref={(code) => { this.code = code; }} required />
+            <button type="submit">Resume Game</button>
+          </form>
+        </div>
+      </section>
     );
   }
 }
