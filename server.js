@@ -6,12 +6,12 @@ const io = require('socket.io')(server);
 const mongoose = require('mongoose');
 const config = require('./config');
 
-const newGame = require('./game');
-const join = require('./game');
-const find = require('./game');
-const restart = require('./game');
-const add = require('./game');
-const share = require('./twilio');
+const newGame = require('./game').newGame;
+const join = require('./game').join;
+const find = require('./game').find;
+const restart = require('./game').restart;
+const add = require('./game').add;
+const share = require('./twilio').share;
 
 app.use(express.static('./public/build'));
 
@@ -20,8 +20,11 @@ io.on('connection', function(socket) {
   console.log("Socket connected: " + socket.id);
   socket.on('action', (action) => {
     if(action.type === 'server/newGame') {
-      let game = newGame(action.data);
-      socket.emit('action', {type:'update', data: game});
+      const promise = newGame(action.data);
+      promise.then((game) => {
+        console.log('server.js game', game)
+        socket.emit('action', {type:'update', data: game});
+      });
     }
     if(action.type === 'server/joinGame') {
       let game = join(action.data);

@@ -25,29 +25,33 @@ let findAll = () => {
 /* CREATE NEW GAME */
 let newGame = (data) => {
   let playerOne = data.playerOne;
-  // calls makeCode and gets a promise
-  const promise = makeCode();
-  // once promise has resolved, it will add it to the db with the returned accesscode
-  promise.then((accessCode) => {
-    Game.create({
-      accessCode: accessCode,
-      gameArray: [
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0],
-      ],
-      isWinner: false,
-      turn: 'Red',
-      players: {'Red': playerOne, 'Blue': 'Blue'}
-    }, (err, game) => {
-      if (err) {
-        return console.error(err);
-      }
-      return game;
+  return new Promise((resolve, reject) => {
+    // calls makeCode and gets a promise
+    const promise = makeCode();
+    // once promise has resolved, it will add it to the db with the returned accesscode
+    promise.then((accessCode) => {
+      Game.create({
+        accessCode: accessCode,
+        gameArray: [
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0],
+        ],
+        isWinner: false,
+        turn: 'Red',
+        players: {'Red': playerOne, 'Blue': 'Blue'}
+        }, (err, game) => {
+          console.log('game.js game', game)
+          if (err) {
+            reject(err);
+          }
+          resolve(game);
+        }
+      );
     });
   });
 }
