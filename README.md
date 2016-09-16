@@ -58,10 +58,12 @@ This page contains the actual game itself. There is a module on the left with th
 -move db to mLab
 -add third option 'resume game'
 -add feature where you can text access code to friends.
+-implement socket.io using redux-socket.io middleware:
+
 
 # TO DO:
--implement socket.io using redux-socket.io middleware:
-	"middleware sends actions to the server when the action type starts with "server/". When the socket.io socket receives a message of type 'action', it will dispatch the action to the store."
+-New game creates new one-element array. Join only the game you're playing. (supports multiple simultaneous games)
+-Remove sockets from array(s) as they get disconnected.
 -randomize who moves first.
 -make so that a player can only move for themselves and not another player.
 

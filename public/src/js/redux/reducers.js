@@ -10,9 +10,9 @@ function reducer(state = {}, action) {
         players: action.data.players
       });
     }
-    case 'sent': {
-      return state;
-    }
+    // case 'sent': {
+    //   return state;
+    // }
     default: {
       return state;
     }
