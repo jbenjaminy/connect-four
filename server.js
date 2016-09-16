@@ -11,6 +11,13 @@ const join = require('./game').join;
 const find = require('./game').find;
 const restart = require('./game').restart;
 const add = require('./game').add;
+const sockets = [];
+
+let emit = (game) => {
+  sockets.forEach(function(socket) {
+    socket.emit('action', {type:'update', data: game});
+  });
+}
 // const share = require('./twilio');
 
 app.use(express.static('./public/build'));
@@ -18,36 +25,26 @@ app.use(express.static('./public/build'));
 // SOCKET CONNECTIONS
 io.on('connection', function(socket) {
   console.log("Socket connected: " + socket.id);
+  sockets.push(socket);
   socket.on('action', (action) => {
     if (action.type === 'server/newGame') {
-      const promise = newGame(action.data);
-      promise.then((game) => {
-        socket.emit('action', {type:'update', data: game});
-      });
+      newGame(action.data).then(emit);
     }
     if (action.type === 'server/joinGame') {
-      const promise = join(action.data);
-      promise.then((game) => {
-        socket.emit('action', {type:'update', data: game });
-      });
+      join(action.data).then(emit);
+
     }
     if (action.type === 'server/findGame') {
-      const promise = find(action.data);
-      promise.then((game) => {
-        socket.emit('action', {type:'update', data: game });
-      });
+      find(action.data).then(emit);
+
     }
     if (action.type === 'server/resetGame') {
-      const promise = restart(action.data);
-      promise.then((game) => {
-        socket.emit('action', {type:'update', data: game });
-      });
+      restart(action.data).then(emit);
+
     }
     if (action.type === 'server/addChip') {
-      const promise = add(action.data);
-      promise.then((game) => {
-        socket.emit('action', {type:'update', data: game });
-      });
+      add(action.data).then(emit);
+
     }
     // if (action.type === 'server/shareCode') {
     //   const promise = share(action.data);
