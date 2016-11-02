@@ -1,4 +1,12 @@
-function reducer(state = {}, action) {
+let initialState = {
+  players: {},
+  gameArray: [],
+  accessCode: '',
+  turn: '',
+  winner: false
+};
+
+function reducer(state = initialState, action) {
   switch (action.type) {
     case 'update': {
       return Object.assign({}, state, {

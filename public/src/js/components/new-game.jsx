@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
+import {browserHistory} from 'react-router'
 
 const propTypes = {
   dispatch: PropTypes.func,
@@ -33,10 +34,12 @@ class NewGame extends React.Component {
         }
       }));
     });
-    promise.then(function() {
-      console.log('in new game promise.then');
-      window.location.href = '/#/game'
-    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.accessCode !== "") {
+      browserHistory.push('/game');
+    }
   }
 
   render() {
@@ -58,4 +61,10 @@ class NewGame extends React.Component {
 
 NewGame.propTypes = propTypes;
 
-module.exports = connect()(NewGame);
+const mapStateToProps = (state) => {
+    return {
+        accessCode: state.accessCode
+    };
+};
+
+module.exports = connect(mapStateToProps)(NewGame);
