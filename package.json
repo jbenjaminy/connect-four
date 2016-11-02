@@ -3,29 +3,46 @@
   "version": "1.0.0",
   "description": "## Functional Specification",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
-  },
   "engines": {
     "node": "6.4.0"
   },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "mkdir": "mkdir -p build",
+    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:js && npm run build:css",
+    "watch": "npm run watch:html & npm run watch:js & npm run watch:css",
+    "clean": "rm -rf build",
+    "build:html": "npm run clean:html && cp src/index.html build/",
+    "watch:html": "npm run build:html && chokidar index.html -c 'npm run build:html'",
+    "clean:html": "rm -f build/index.html",
+    "build:css": "npm run clean:css && lessc --source-map src/css/style.less build/$npm_package_name.$npm_package_version.css",
+    "watch:css": "npm run build:css && chokidar 'src/css/**/*.less' -c 'npm run build:css'",
+    "clean:css": "rm -f build/$npm_package_name.$npm_package_version.css build/$npm_package_name.$npm_package_version.css.map",
+    "build:js": "npm run clean:js && webpack",
+    "watch:js": "npm run build:js && webpack --watch",
+    "clean:js": "rm -f build/$npm_package_name.$npm_package_version.js build/$npm_package_name.$npm_package_version.js.map",
+    "heroku-postbuild": "npm run build"
+  },
+  "author": "Robby Kim & Ben Young",
+  "license": "ISC",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/robbykim/connect-four.git"
+    "url": "git+https://github.com/jbenjaminy/connect-four.git"
   },
-  "author": "",
-  "license": "ISC",
   "bugs": {
-    "url": "https://github.com/robbykim/connect-four/issues"
+    "url": "https://github.com/jbenjaminy/connect-four/issues"
   },
-  "homepage": "https://github.com/robbykim/connect-four#readme",
+  "homepage": "http://connect-four.jbenjaminy.com",
   "devDependencies": {
-    "eslint": "^3.5.0",
-    "eslint-config-airbnb": "^11.1.0",
-    "eslint-plugin-import": "^1.14.0",
-    "eslint-plugin-jsx-a11y": "^2.2.2",
-    "eslint-plugin-react": "^6.2.0"
+    "babel-cli": "^6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "babel-preset-react": "^6.11.1",
+    "chokidar-cli": "^1.2.0",
+    "less": "^2.7.1",
+    "webpack": "^1.13.2"
   },
   "dependencies": {
     "body-parser": "^1.15.2",
@@ -33,6 +50,11 @@
     "file-system": "^2.2.1",
     "http-server": "^0.9.0",
     "mongoose": "^4.6.0",
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.8.0",
+    "redux": "^3.6.0",
     "redux-socket.io": "^1.2.0",
     "socket.io": "^1.4.8"
   }

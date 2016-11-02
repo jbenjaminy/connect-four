@@ -20,7 +20,7 @@ let emit = (game) => {
 }
 // const share = require('./twilio');
 
-app.use(express.static('./public/build'));
+app.use(express.static('./build'));
 
 // SOCKET CONNECTIONS
 io.on('connection', function(socket) {
