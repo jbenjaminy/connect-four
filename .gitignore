@@ -1,5 +1,5 @@
 node_modules
 .DS_Store
 logic.js
-twilio
+twilio.js
 build

@@ -4,13 +4,13 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 const mongoose = require('mongoose');
-const config = require('./config');
+const config = require('./backend/config');
 
-const newGame = require('./game').newGame;
-const join = require('./game').join;
-const find = require('./game').find;
-const restart = require('./game').restart;
-const add = require('./game').add;
+const newGame = require('./backend/game').newGame;
+const join = require('./backend/game').join;
+const find = require('./backend/game').find;
+const restart = require('./backend/game').restart;
+const add = require('./backend/game').add;
 const sockets = [];
 
 let emit = (game) => {
@@ -18,7 +18,7 @@ let emit = (game) => {
     socket.emit('action', {type:'update', data: game});
   });
 }
-// const share = require('./twilio');
+// const share = require('./backend/twilio');
 
 app.use(express.static('./build'));
 
